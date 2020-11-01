@@ -20,7 +20,7 @@
         }
     },
     "variables":{
-      "VolumioURI":"http://volumio2.local",
+      "VolumioURI":"http://volumio.local",
       "Playing":"",
       "MyArtist":"",
       "MyAlbum":"",
