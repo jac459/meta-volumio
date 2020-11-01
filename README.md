@@ -1,6 +1,8 @@
 # meta-volumio
 volumio config for meta
 
+https://www.youtube.com/watch?v=ybQrpgSK1yM&t=34s
+
 Support meta V0.8.15 onwards.
 
 ## Setup
