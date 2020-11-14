@@ -40,3 +40,20 @@ You can see the song in your queue by using the my playing queue list.
 ### Playing
 You play using the play toggle (also attached to the ok button), skip track using next previous and seek throught the progress slider.
 You see what you are doing using the status label.
+
+## Note on people willing to control Chromecast through Volumio
+### If your volumio host the music source
+#### Get access to your volumio ssh
+#### Create a Samba share in your volumio
+==> Then you need to create a webserver to serve your files to the chromecast as chromecast doesn't read samba
+### Mount localy your Samba:
+```
+sudo mkdir /mnt/volumioShare    (create a fake folder))
+sudo mount -t cifs //192.168.1.44/Volumio2Share /mnt/volumioShare (link the samba to the folder
+```
+### Install a webserver
+``` npm install --global http-server```
+### Run the server
+http-server /mnt/volumioShare
+or pm2 start "http-server /mnt/volumioShare"
+
