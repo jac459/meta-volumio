@@ -208,18 +208,18 @@
             "then": "__SHUFFLE ON",
             "or": "__SHUFFLE OFF"
           }
-        ],
-        "MUTE": {
-          "label": "",
-          "listen": "Mute",
-          "evaldo": [
-            {
-              "test": "DYNAMIK $Result",
-              "then": "__MUTE ON",
-              "or": "__MUTE OFF"
-            }
-          ]
-        }
+        ]
+      },
+      "MUTE": {
+        "label": "",
+        "listen": "Mute",
+        "evaldo": [
+          {
+            "test": "DYNAMIK $Result",
+            "then": "__MUTE ON",
+            "or": "__MUTE OFF"
+          }
+        ]
       }
     },
     "sliders": {
@@ -1473,4 +1473,4 @@
       }
     }
   }
-}
+  
