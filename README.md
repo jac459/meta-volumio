@@ -36,7 +36,16 @@ You can see the song in your queue by using the my playing queue list.
 You play using the play toggle (also attached to the ok button), skip track using next or previous and seek throught the progress slider.
 You see what you are doing using the status label.
 ### Radio
-
+Radio stations listed in the My Music list are taken from the favorite radio stations in the volumio software.
+To have radio stations available, you need to create favorites in volumio first.
+### Shortcuts
+You can create entries in the directory beyond the standard provided entries.
+This makes it possible to provide access to music not provided through the default My Music list.
+To do this, use the Manage Shortcuts button.
+You will be able to browse the full directory and add any entry in the directory as a shortcut to the My Music list.
+Shortcuts will be added to the top of the My Music list.
+Using the same Manage Shortcuts button, you can also remove existing shortcuts.
+A Clear Shortcuts button removes all shortcuts from the My Music list.
 
 ## Note on people willing to control Chromecast through Volumio
 ### If your volumio host the music source
