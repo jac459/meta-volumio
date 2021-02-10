@@ -102,8 +102,8 @@
     },
     "variables": {
       "VolumioURI": "http://DYNAMIK_INST_START DYNAMIK JSON.parse(\"$Result\").addresses[0] DYNAMIK_INST_END",
-      "FOLDER_TYPES": "{folder, playlist}",
-      "PLAY_TYPES": "{track, song, folder, webradio, mywebradio, playlist}",
+      "FOLDER_TYPES": "[\"folder\", \"playlist\"]",
+      "PLAY_TYPES": "[\"track\", \"song\", \"folder\", \"webradio\", \"mywebradio\", \"playlist\"]",
       "PlayerStatus": "",
       "PlayFlag": false,
       "Title": "",
@@ -588,7 +588,7 @@
                   },
                   {
                     "variable": "CanPlay",
-                    "value": "DYNAMIK \"$PLAY_TYPES\".includes(JSON.parse(\"$Result\").type)"
+                    "value": "DYNAMIK $PLAY_TYPES.includes(JSON.parse(\"$Result\").type)"
                   },
                   {
                     "variable": "PlayPayLoad",
@@ -667,11 +667,11 @@
                   },
                   {
                     "variable": "IsFolder",
-                    "value": "DYNAMIK \"$FOLDER_TYPES\".includes(JSON.parse(\"$Result\").type)"
+                    "value": "DYNAMIK $FOLDER_TYPES.includes(JSON.parse(\"$Result\").type)"
                   },
                   {
                     "variable": "CanPlay",
-                    "value": "DYNAMIK \"$PLAY_TYPES\".includes(JSON.parse(\"$Result\").type)"
+                    "value": "DYNAMIK $PLAY_TYPES.includes(JSON.parse(\"$Result\").type)"
                   },
                   {
                     "variable": "PlayPayLoad",
@@ -725,11 +725,11 @@
                   },
                   {
                     "variable": "IsFolder",
-                    "value": "DYNAMIK \"$FOLDER_TYPES\".includes(JSON.parse(\"$Result\").type)"
+                    "value": "DYNAMIK $FOLDER_TYPES.includes(JSON.parse(\"$Result\").type)"
                   },
                   {
                     "variable": "CanPlay",
-                    "value": "DYNAMIK \"$PLAY_TYPES\".includes(JSON.parse(\"$Result\").type)"
+                    "value": "DYNAMIK $PLAY_TYPES.includes(JSON.parse(\"$Result\").type)"
                   },
                   {
                     "variable": "PlayPayLoad",
@@ -783,11 +783,11 @@
                   },
                   {
                     "variable": "IsFolder",
-                    "value": "DYNAMIK \"$FOLDER_TYPES\".includes(JSON.parse(\"$Result\").type)"
+                    "value": "DYNAMIK $FOLDER_TYPES.includes(JSON.parse(\"$Result\").type)"
                   },
                   {
                     "variable": "CanPlay",
-                    "value": "DYNAMIK \"$PLAY_TYPES\".includes(JSON.parse(\"$Result\").type)"
+                    "value": "DYNAMIK $PLAY_TYPES.includes(JSON.parse(\"$Result\").type)"
                   },
                   {
                     "variable": "PlayPayLoad",
@@ -841,11 +841,11 @@
                   },
                   {
                     "variable": "IsFolder",
-                    "value": "DYNAMIK \"$FOLDER_TYPES\".includes(JSON.parse(\"$Result\").type)"
+                    "value": "DYNAMIK $FOLDER_TYPES.includes(JSON.parse(\"$Result\").type)"
                   },
                   {
                     "variable": "CanPlay",
-                    "value": "DYNAMIK \"$PLAY_TYPES\".includes(JSON.parse(\"$Result\").type)"
+                    "value": "DYNAMIK $PLAY_TYPES.includes(JSON.parse(\"$Result\").type)"
                   },
                   {
                     "variable": "PlayPayLoad",
@@ -899,11 +899,11 @@
                   },
                   {
                     "variable": "IsFolder",
-                    "value": "DYNAMIK \"$FOLDER_TYPES\".includes(JSON.parse(\"$Result\").type)"
+                    "value": "DYNAMIK $FOLDER_TYPES.includes(JSON.parse(\"$Result\").type)"
                   },
                   {
                     "variable": "CanPlay",
-                    "value": "DYNAMIK \"$PLAY_TYPES\".includes(JSON.parse(\"$Result\").type)"
+                    "value": "DYNAMIK $PLAY_TYPES.includes(JSON.parse(\"$Result\").type)"
                   },
                   {
                     "variable": "PlayPayLoad",
@@ -973,7 +973,7 @@
                   },
                   {
                     "variable": "CanPlay",
-                    "value": "DYNAMIK \"$PLAY_TYPES\".includes(JSON.parse(\"$Result\").type)"
+                    "value": "DYNAMIK $PLAY_TYPES.includes(JSON.parse(\"$Result\").type)"
                   },
                   {
                     "variable": "PlayPayLoad",
@@ -1019,7 +1019,7 @@
                   },
                   {
                     "variable": "CanPlay",
-                    "value": "DYNAMIK \"$PLAY_TYPES\".includes(JSON.parse(\"$Result\").type)"
+                    "value": "DYNAMIK $PLAY_TYPES.includes(JSON.parse(\"$Result\").type)"
                   },
                   {
                     "variable": "PlayPayLoad",
@@ -1064,7 +1064,7 @@
                   },
                   {
                     "variable": "CanPlay",
-                    "value": "DYNAMIK \"$PLAY_TYPES\".includes(JSON.parse(\"$Result\").type)"
+                    "value": "DYNAMIK $PLAY_TYPES.includes(JSON.parse(\"$Result\").type)"
                   },
                   {
                     "variable": "PlayPayLoad",
@@ -1109,7 +1109,7 @@
                   },
                   {
                     "variable": "CanPlay",
-                    "value": "DYNAMIK \"$PLAY_TYPES\".includes(JSON.parse(\"$Result\").type)"
+                    "value": "DYNAMIK $PLAY_TYPES.includes(JSON.parse(\"$Result\").type)"
                   },
                   {
                     "variable": "PlayPayLoad",
@@ -1154,7 +1154,7 @@
                   },
                   {
                     "variable": "CanPlay",
-                    "value": "DYNAMIK \"$PLAY_TYPES\".includes(JSON.parse(\"$Result\").type)"
+                    "value": "DYNAMIK $PLAY_TYPES.includes(JSON.parse(\"$Result\").type)"
                   },
                   {
                     "variable": "PlayPayLoad",
@@ -1264,7 +1264,7 @@
                   },
                   {
                     "variable": "CanPlay",
-                    "value": "DYNAMIK \"$PLAY_TYPES\".includes(JSON.parse(\"$Result\").type)"
+                    "value": "DYNAMIK $PLAY_TYPES.includes(JSON.parse(\"$Result\").type)"
                   },
                   {
                     "variable": "BrowseCommand",
@@ -1333,7 +1333,7 @@
                   },
                   {
                     "variable": "CanPlay",
-                    "value": "DYNAMIK \"$PLAY_TYPES\".includes(JSON.parse(\"$Result\").type)"
+                    "value": "DYNAMIK $PLAY_TYPES.includes(JSON.parse(\"$Result\").type)"
                   },
                   {
                     "variable": "BrowseCommand",
