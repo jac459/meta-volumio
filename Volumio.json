@@ -1,11 +1,11 @@
 {
   "name": "Volumio .meta",
-  "manufacturer": "Volumio",
-  "version": 37,
+  "manufacturer": "JAC459/mherwege/TonO",
+  "version": 43,
   "type": "AUDIO",
   "discover": {
     "welcomeheadertext": "Choose your Volumio Instance",
-    "welcomedescription": "powered by meta\nby JAC45/TonO",
+    "welcomedescription": "powered by meta",
     "command": {
       "type": "static",
       "command": "$LocalDevices",
@@ -17,15 +17,17 @@
   "template": {
     "name": "Volumio .meta",
     "dynamicname": "DYNAMIK_INST_START DYNAMIK JSON.parse(\"$Result\").name DYNAMIK_INST_END",
-    "dynamicid": "DYNAMIK_INST_START DYNAMIK JSON.parse(\"$Result\").addresses[0]  + \":\" + JSON.parse(\"$Result\").name DYNAMIK_INST_END",
-    "manufacturer": "Volumio",
-    "version": 37,
+    "dynamicid": "DYNAMIK_INST_START DYNAMIK \"Volumio - \" + JSON.parse(\"$Result\").addresses[0] DYNAMIK_INST_END",
+    "manufacturer": "JAC459/mherwege/TonO",
+    "version": 43,
     "type": "AUDIO",
-    "webSocket": "$VolumioURI",
     "listeners": {
       "VolumioStatus": {
-        "type": "webSocket",
-        "command": "pushState",
+        "type": "socketIO",
+        "command": {
+          "connection": "$VolumioURI",
+          "message": "pushState"
+        },
         "queryresult": "",
         "evalwrite": [
           {
@@ -88,14 +90,29 @@
       },
       "VolumioProgress": {
         "type": "static",
-        "command": "VolumioProgress",
+        "command": ".",
         "pooltime": "3000",
         "poolduration": "",
-        "queryresult": "$.",
-        "evalwrite": [
+        "queryresult": "",
+        "evaldo": [
           {
-            "variable": "Progress",
-            "value": "DYNAMIK ($Duration == 0) ? 0 : ($PlayFlag ? Math.min(Math.round($ResetProgress + 0.1*(Date.now() - $ResetTimeReference)/$Duration), 100) : $Progress)"
+            "test": true,
+            "then": "__REFRESHPROGRESS",
+            "or": ""
+          }
+        ]
+      },
+      "SaveShortcuts": {
+        "type": "static",
+        "command": "SaveShortcuts",
+        "pooltime": "5000",
+        "poolduration": "",
+        "queryresult": "$.",
+        "evaldo": [
+          {
+            "test": "DYNAMIK $Persist",
+            "then": "__PERSIST",
+            "or": ""
           }
         ]
       }
@@ -114,17 +131,38 @@
       "BrowseCommand": "",
       "BrowseLevel": 0,
       "MAX_BROWSE_LEVEL": 5,
-      "MyArtist": "",
+      "ArtistName": "",
       "MyURI": "",
+      "MyCollectionURI": "",
+      "MyBrowse0URI": "",
+      "MyBrowse1URI": "",
+      "MyBrowse2URI": "",
+      "MyBrowse3URI": "",
+      "MyBrowse4URI": "",
+      "MyBrowse5URI": "",
+      "MyArtistsURI": "",
       "ItemType": "",
       "URIStack": "[]",
       "StackLength": 0,
       "Shortcut": "",
       "MyBrowseName": "",
+      "MyBrowse0Name": "",
+      "MyBrowse1Name": "",
+      "MyBrowse2Name": "",
+      "MyBrowse3Name": "",
+      "MyBrowse4Name": "",
+      "MyBrowse5Name": "",
       "MyBrowseLabel": "",
-      "AlbumArtURI": "",
+      "MyAlbumArtURI": "",
+      "MyAlbumArtCollectionURI": "",
+      "MyAlbumArt0URI": "",
+      "MyAlbumArt1URI": "",
+      "MyAlbumArt2URI": "",
+      "MyAlbumArt3URI": "",
+      "MyAlbumArt4URI": "",
+      "MyAlbumArt5URI": "",
+      "MyAlbumArtArtistsURI": "",
       "IsFolder": false,
-      "CanPlay": false,
       "PlayPayLoad": "",
       "AlbumCoverURI": "",
       "PutInQueue": false,
@@ -137,7 +175,8 @@
       "ResetTimeReference": 0,
       "Duration": 0,
       "Repeat": false,
-      "Shuffle": false
+      "Shuffle": false,
+      "Persist": false
     },
     "persistedvariables": {
       "MyShortcuts": ""
@@ -159,7 +198,7 @@
         "label": "",
         "listen": "Title"
       },
-      "CurrentStatus": {
+      ".": {
         "label": "",
         "listen": "Playing",
         "actionlisten": "VolumeDisplay"
@@ -182,7 +221,7 @@
         "listen": "PlayFlag",
         "evaldo": [
           {
-            "test": "DYNAMIk $Result",
+            "test": "DYNAMIK $Result",
             "then": "PLAY",
             "or": "PAUSE"
           }
@@ -193,7 +232,7 @@
         "listen": "Repeat",
         "evaldo": [
           {
-            "test": "DYNAMIk $Result",
+            "test": "DYNAMIK $Result",
             "then": "__REPEAT ON",
             "or": "__REPEAT OFF"
           }
@@ -279,6 +318,17 @@
           }
         ]
       },
+      "__REFRESHPROGRESS": {
+        "label": "",
+        "type": "static",
+        "command": "",
+        "evalwrite": [
+          {
+            "variable": "Progress",
+            "value": "DYNAMIK ($Duration == 0) ? 0 : ($PlayFlag ? Math.min(Math.round($ResetProgress + 0.1*(Date.now() - $ResetTimeReference)/$Duration), 100) : $Progress)"
+          }
+        ]
+      },
       "VOLUME UP": {
         "label": "",
         "type": "static",
@@ -317,8 +367,14 @@
       },
       "STOP": {
         "label": "",
-        "type": "webSocket",
-        "command": "{\"call\":\"stop\"}",
+        "type": "socketIO",
+        "command": {
+          "connection": "$VolumioURI",
+          "message": {
+            "call": "stop",
+            "message": ""
+          }
+        },
         "evalwrite": [
           {
             "variable": "Playing",
@@ -352,18 +408,40 @@
       },
       "PLAY TOGGLE": {
         "label": "",
-        "type": "webSocket",
-        "command": "{\"call\":\"toggle\"}"
+        "type": "socketIO",
+        "command": {
+          "connection": "$VolumioURI",
+          "message": {
+            "call": "toggle",
+            "message": ""
+          }
+        }
       },
       "__REPEAT ON": {
         "label": "",
-        "type": "webSocket",
-        "command": "{\"call\":\"setRepeat\", \"message\":{\"value\": true}}"
+        "type": "socketIO",
+        "command": {
+          "connection": "$VolumioURI",
+          "message": {
+            "call": "setRepeat",
+            "message": {
+              "value": true
+            }
+          }
+        }
       },
       "__REPEAT OFF": {
         "label": "",
-        "type": "webSocket",
-        "command": "{\"call\":\"setRepeat\", \"message\":{\"value\": false}}"
+        "type": "socketIO",
+        "command": {
+          "connection": "$VolumioURI",
+          "message": {
+            "call": "setRepeat",
+            "message": {
+              "value": false
+            }
+          }
+        }
       },
       "REPEAT TOGGLE": {
         "label": "",
@@ -379,13 +457,29 @@
       },
       "__SHUFFLE ON": {
         "label": "",
-        "type": "webSocket",
-        "command": "{\"call\":\"setRandom\", \"message\":{\"value\": true}}"
+        "type": "socketIO",
+        "command": {
+          "connection": "$VolumioURI",
+          "message": {
+            "call": "setRandom",
+            "message": {
+              "value": true
+            }
+          }
+        }
       },
       "__SHUFFLE OFF": {
         "label": "",
-        "type": "webSocket",
-        "command": "{\"call\":\"setRandom\", \"message\":{\"value\": false}}"
+        "type": "socketIO",
+        "command": {
+          "connection": "$VolumioURI",
+          "message": {
+            "call": "setRandom",
+            "message": {
+              "value": false
+            }
+          }
+        }
       },
       "SHUFFLE TOGGLE": {
         "label": "",
@@ -401,13 +495,25 @@
       },
       "__MUTE ON": {
         "label": "",
-        "type": "webSocket",
-        "command": "{\"call\":\"mute\"}"
+        "type": "socketIO",
+        "command": {
+          "connection": "$VolumioURI",
+          "message": {
+            "call": "mute",
+            "message": ""
+          }
+        }
       },
       "__MUTE OFF": {
         "label": "",
-        "type": "webSocket",
-        "command": "{\"call\":\"unmute\"}"
+        "type": "socketIO",
+        "command": {
+          "connection": "$VolumioURI",
+          "message": {
+            "call": "unmute",
+            "message": ""
+          }
+        }
       },
       "MUTE TOGGLE": {
         "label": "",
@@ -454,6 +560,11 @@
         "command": "",
         "evaldo": [
           {
+            "test": "DYNAMIK $Persist",
+            "then": "__PERSIST",
+            "or": ""
+          },
+          {
             "test": true,
             "then": "__CLEANUP",
             "or": ""
@@ -498,18 +609,36 @@
       },
       "PREVIOUS": {
         "label": "",
-        "type": "webSocket",
-        "command": "{\"call\":\"prev\"}"
+        "type": "socketIO",
+        "command": {
+          "connection": "$VolumioURI",
+          "message": {
+            "call": "prev",
+            "message": ""
+          }
+        }
       },
       "NEXT": {
         "label": "",
-        "type": "webSocket",
-        "command": "{\"call\":\"next\"}"
+        "type": "socketIO",
+        "command": {
+          "connection": "$VolumioURI",
+          "message": {
+            "call": "next",
+            "message": ""
+          }
+        }
       },
       "CLEAR QUEUE": {
         "label": "",
-        "type": "webSocket",
-        "command": "{\"call\":\"clearQueue\"}"
+        "type": "socketIO",
+        "command": {
+          "connection": "$VolumioURI",
+          "message": {
+            "call": "clearQueue",
+            "message": ""
+          }
+        }
       },
       "CLEAR SHORTCUTS": {
         "label": "",
@@ -535,24 +664,53 @@
       },
       "__VOLUMESET": {
         "label": "",
-        "type": "webSocket",
-        "command": "{\"call\":\"volume\", \"message\":\"$VolumePlayed\"}"
+        "type": "socketIO",
+        "command": {
+          "connection": "$VolumioURI",
+          "message": {
+            "call": "volume",
+            "message": "$VolumePlayed"
+          }
+        }
       },
       "__PROGRESSSET": {
         "label": "",
-        "type": "webSocket",
+        "type": "socketIO",
         "evalwrite": [
           {
             "variable": "ResetTimeReference",
             "value": "DYNAMIK Date.now()"
           }
         ],
-        "command": "DYNAMIK \"{\\\"call\\\":\\\"seek\\\", \\\"message\\\":\" + Math.round(0.01*$Progress*$Duration) + \"}\""
+        "command": {
+          "connection": "$VolumioURI",
+          "message": {
+            "call": "seek",
+            "message": "DYNAMIK \" + Math.round(0.01*$Progress*$Duration) + \""
+          }
+        }
       },
       "__GETSTATE": {
         "label": "",
-        "type": "webSocket",
-        "command": "{\"call\":\"getState\"}"
+        "type": "socketIO",
+        "command": {
+          "connection": "$VolumioURI",
+          "message": {
+            "call": "getState",
+            "message": ""
+          }
+        }
+      },
+      "__PERSIST": {
+        "label": "",
+        "type": "static",
+        "evalwrite": [
+          {
+            "variable": "Persist",
+            "value": false
+          }
+        ],
+        "command": ""
       }
     },
     "directories": {
@@ -571,34 +729,38 @@
                 "itemimage": "DYNAMIK JSON.parse(\"$Result\").imageurl",
                 "evalwrite": [
                   {
-                    "variable": "MyBrowseName",
-                    "value": "DYNAMIK JSON.parse(\"$Result\").name"
-                  },
-                  {
-                    "variable": "BrowseLevel",
-                    "value": 1
-                  },
-                  {
-                    "variable": "MyURI",
+                    "variable": "MyCollectionURI",
                     "value": "DYNAMIK JSON.parse(\"$Result\").uri"
                   },
                   {
-                    "variable": "AlbumArtURI",
+                    "variable": "MyAlbumArtCollectionURI",
                     "value": "DYNAMIK JSON.parse(\"$Result\").imageurl"
-                  },
-                  {
-                    "variable": "CanPlay",
-                    "value": "DYNAMIK $PLAY_TYPES.includes(JSON.parse(\"$Result\").type)"
                   },
                   {
                     "variable": "PlayPayLoad",
                     "value": "$Result"
+                  },
+                  {
+                    "variable": "MyBrowse0Name",
+                    "value": "DYNAMIK JSON.parse(\"$Result\").name"
+                  },
+                  {
+                    "variable": "MyBrowse0URI",
+                    "value": "DYNAMIK JSON.parse(\"$Result\").uri"
+                  },
+                  {
+                    "variable": "MyAlbumArt0URI",
+                    "value": "DYNAMIK JSON.parse(\"$Result\").imageurl"
+                  },
+                  {
+                    "variable": "BrowseLevel",
+                    "value": 0
                   }
                 ],
                 "evalnext": [
                   {
                     "test": "DYNAMIK JSON.parse(\"$Result\").navigation == \"Browse\"",
-                    "then": "Browse_1",
+                    "then": "Browse_0",
                     "or": ""
                   },
                   {
@@ -630,57 +792,107 @@
               }
             ]
           },
-          "Browse_1": {
-            "label": "$MyBrowseName",
+          "Browse_0": {
+            "label": "$MyBrowse0Name",
             "commandset": [
               {
                 "type": "static",
                 "command": "{}",
-                "itemUI": "DYNAMIK ((\"$CanPlay\" == \"false\") || (\"$MyPlayMode\" == \"ACTION_Play\")) ? \"close\" : \"goBack\"",
+                "itemUI": "DYNAMIK (\"$MyPlayMode\" == \"ACTION_Play\") ? \"close\" : \"goBack\"",
                 "itemtype": "tile",
                 "itemaction": "$MyPlayMode",
-                "itemimage": "$AlbumArtURI"
+                "itemimage": "$MyAlbumArt0URI"
               },
               {
                 "type": "http-get",
-                "command": "$VolumioURI/api/v1/browse?uri=$MyURI",
+                "command": "$VolumioURI/api/v1/browse?uri=$MyBrowse0URI",
                 "queryresult": "$.navigation.lists[0].items[*]",
                 "itemname": "DYNAMIK JSON.parse(\"$Result\").title",
                 "itemlabel": "DYNAMIK JSON.parse(\"$Result\").album ? JSON.parse(\"$Result\").album : (JSON.parse(\"$Result\").artist ? JSON.parse(\"$Result\").artist : \"\")",
-                "itemimage": "DYNAMIK JSON.parse(\"$Result\").albumart ? \"$VolumioURI\" + JSON.parse(\"$Result\").albumart : \"$AlbumArtURI\"",
+                "itemimage": "DYNAMIK JSON.parse(\"$Result\").albumart ? ((!JSON.parse(\"$Result\").albumart.startsWith(\"http\") ? (\"$VolumioURI\" + JSON.parse(\"$Result\").albumart) : JSON.parse(\"$Result\").albumart)) : \"$MyAlbumArt0URI\"",
                 "evalwrite": [
-                  {
-                    "variable": "MyBrowseName",
-                    "value": "DYNAMIK JSON.parse(\"$Result\").title"
-                  },
-                  {
-                    "variable": "BrowseLevel",
-                    "value": "DYNAMIK $BrowseLevel + 1"
-                  },
-                  {
-                    "variable": "AlbumArtURI",
-                    "value": "DYNAMIK JSON.parse(\"$Result\").albumart ? \"$VolumioURI\" + JSON.parse(\"$Result\").albumart : \"$AlbumArtURI\""
-                  },
-                  {
-                    "variable": "MyURI",
-                    "value": "DYNAMIK JSON.parse(\"$Result\").uri"
-                  },
                   {
                     "variable": "IsFolder",
                     "value": "DYNAMIK $FOLDER_TYPES.includes(JSON.parse(\"$Result\").type)"
                   },
                   {
-                    "variable": "CanPlay",
-                    "value": "DYNAMIK $PLAY_TYPES.includes(JSON.parse(\"$Result\").type)"
-                  },
-                  {
                     "variable": "PlayPayLoad",
                     "value": "$Result"
+                  },
+                  {
+                    "variable": "MyBrowse1Name",
+                    "value": "DYNAMIK JSON.parse(\"$Result\").title"
+                  },
+                  {
+                    "variable": "MyBrowse1URI",
+                    "value": "DYNAMIK JSON.parse(\"$Result\").uri"
+                  },
+                  {
+                    "variable": "MyAlbumArt1URI",
+                    "value": "DYNAMIK JSON.parse(\"$Result\").albumart ? ((!JSON.parse(\"$Result\").albumart.startsWith(\"http\") ? (\"$VolumioURI\" + JSON.parse(\"$Result\").albumart) : JSON.parse(\"$Result\").albumart)) : \"$MyAlbumArt0URI\""
+                  },
+                  {
+                    "variable": "BrowseLevel",
+                    "value": 1
                   }
                 ],
                 "evalnext": [
                   {
-                    "test": "DYNAMIK (\"$IsFolder\" == \"true\") && ($BrowseLevel <= $MAX_BROWSE_LEVEL)",
+                    "test": "DYNAMIK $IsFolder && ($BrowseLevel < $MAX_BROWSE_LEVEL)",
+                    "then": "Browse_1",
+                    "or": ""
+                  }
+                ]
+              }
+            ]
+          },
+          "Browse_1": {
+            "label": "$MyBrowse1Name",
+            "commandset": [
+              {
+                "type": "static",
+                "command": "{}",
+                "itemUI": "DYNAMIK (\"$MyPlayMode\" == \"ACTION_Play\") ? \"close\" : \"goBack\"",
+                "itemtype": "tile",
+                "itemaction": "$MyPlayMode",
+                "itemimage": "$MyAlbumArt1URI"
+              },
+              {
+                "type": "http-get",
+                "command": "$VolumioURI/api/v1/browse?uri=$MyBrowse1URI",
+                "queryresult": "$.navigation.lists[0].items[*]",
+                "itemname": "DYNAMIK JSON.parse(\"$Result\").title",
+                "itemlabel": "DYNAMIK JSON.parse(\"$Result\").album ? JSON.parse(\"$Result\").album : (JSON.parse(\"$Result\").artist ? JSON.parse(\"$Result\").artist : \"\")",
+                "itemimage": "DYNAMIK JSON.parse(\"$Result\").albumart ? ((!JSON.parse(\"$Result\").albumart.startsWith(\"http\") ? (\"$VolumioURI\" + JSON.parse(\"$Result\").albumart) : JSON.parse(\"$Result\").albumart)) : \"$MyAlbumArt1URI\"",
+                "evalwrite": [
+                  {
+                    "variable": "IsFolder",
+                    "value": "DYNAMIK $FOLDER_TYPES.includes(JSON.parse(\"$Result\").type)"
+                  },
+                  {
+                    "variable": "PlayPayLoad",
+                    "value": "$Result"
+                  },
+                  {
+                    "variable": "MyBrowse2Name",
+                    "value": "DYNAMIK JSON.parse(\"$Result\").title"
+                  },
+                  {
+                    "variable": "MyBrowse2URI",
+                    "value": "DYNAMIK JSON.parse(\"$Result\").uri"
+                  },
+                  {
+                    "variable": "MyAlbumArt2URI",
+                    "value": "DYNAMIK JSON.parse(\"$Result\").albumart ? ((!JSON.parse(\"$Result\").albumart.startsWith(\"http\") ? (\"$VolumioURI\" + JSON.parse(\"$Result\").albumart) : JSON.parse(\"$Result\").albumart)) : \"$MyAlbumArt1URI\""
+                  },
+                  {
+                    "variable": "BrowseLevel",
+                    "value": 2
+                  }
+                ],
+                "evalnext": [
+                  {
+                    "test": "DYNAMIK $IsFolder && ($BrowseLevel < $MAX_BROWSE_LEVEL)",
                     "then": "Browse_2",
                     "or": ""
                   }
@@ -689,56 +901,52 @@
             ]
           },
           "Browse_2": {
-            "label": "$MyBrowseName",
+            "label": "$MyBrowse2Name",
             "commandset": [
               {
                 "type": "static",
                 "command": "{}",
-                "itemUI": "DYNAMIK ((\"$CanPlay\" == \"false\") || (\"$MyPlayMode\" == \"ACTION_Play\")) ? \"close\" : \"goBack\"",
+                "itemUI": "DYNAMIK (\"$MyPlayMode\" == \"ACTION_Play\") ? \"close\" : \"goBack\"",
                 "itemtype": "tile",
                 "itemaction": "$MyPlayMode",
-                "itemimage": "$AlbumArtURI"
+                "itemimage": "$MyAlbumArt2URI"
               },
               {
                 "type": "http-get",
-                "command": "$VolumioURI/api/v1/browse?uri=$MyURI",
+                "command": "$VolumioURI/api/v1/browse?uri=$MyBrowse2URI",
                 "queryresult": "$.navigation.lists[0].items[*]",
                 "itemname": "DYNAMIK JSON.parse(\"$Result\").title",
                 "itemlabel": "DYNAMIK JSON.parse(\"$Result\").album ? JSON.parse(\"$Result\").album : (JSON.parse(\"$Result\").artist ? JSON.parse(\"$Result\").artist : \"\")",
-                "itemimage": "DYNAMIK JSON.parse(\"$Result\").albumart ? \"$VolumioURI\" + JSON.parse(\"$Result\").albumart : \"$AlbumArtURI\"",
+                "itemimage": "DYNAMIK JSON.parse(\"$Result\").albumart ? ((!JSON.parse(\"$Result\").albumart.startsWith(\"http\") ? (\"$VolumioURI\" + JSON.parse(\"$Result\").albumart) : JSON.parse(\"$Result\").albumart)) : \"$MyAlbumArt2URI\"",
                 "evalwrite": [
-                  {
-                    "variable": "MyBrowseName",
-                    "value": "DYNAMIK JSON.parse(\"$Result\").title"
-                  },
-                  {
-                    "variable": "BrowseLevel",
-                    "value": "DYNAMIK $BrowseLevel + 1"
-                  },
-                  {
-                    "variable": "AlbumArtURI",
-                    "value": "DYNAMIK JSON.parse(\"$Result\").albumart ? \"$VolumioURI\" + JSON.parse(\"$Result\").albumart : \"$AlbumArtURI\""
-                  },
-                  {
-                    "variable": "MyURI",
-                    "value": "DYNAMIK JSON.parse(\"$Result\").uri"
-                  },
                   {
                     "variable": "IsFolder",
                     "value": "DYNAMIK $FOLDER_TYPES.includes(JSON.parse(\"$Result\").type)"
                   },
                   {
-                    "variable": "CanPlay",
-                    "value": "DYNAMIK $PLAY_TYPES.includes(JSON.parse(\"$Result\").type)"
-                  },
-                  {
                     "variable": "PlayPayLoad",
                     "value": "$Result"
+                  },
+                  {
+                    "variable": "MyBrowse3Name",
+                    "value": "DYNAMIK JSON.parse(\"$Result\").title"
+                  },
+                  {
+                    "variable": "MyBrowse3URI",
+                    "value": "DYNAMIK JSON.parse(\"$Result\").uri"
+                  },
+                  {
+                    "variable": "MyAlbumArt3URI",
+                    "value": "DYNAMIK JSON.parse(\"$Result\").albumart ? ((!JSON.parse(\"$Result\").albumart.startsWith(\"http\") ? (\"$VolumioURI\" + JSON.parse(\"$Result\").albumart) : JSON.parse(\"$Result\").albumart)) : \"$MyAlbumArt2URI\""
+                  },
+                  {
+                    "variable": "BrowseLevel",
+                    "value": 3
                   }
                 ],
                 "evalnext": [
                   {
-                    "test": "DYNAMIK (\"$IsFolder\" == \"true\") && ($BrowseLevel <= $MAX_BROWSE_LEVEL)",
+                    "test": "DYNAMIK $IsFolder && ($BrowseLevel < $MAX_BROWSE_LEVEL)",
                     "then": "Browse_3",
                     "or": ""
                   }
@@ -747,56 +955,52 @@
             ]
           },
           "Browse_3": {
-            "label": "$MyBrowseName",
+            "label": "$MyBrowse3Name",
             "commandset": [
               {
                 "type": "static",
                 "command": "{}",
-                "itemUI": "DYNAMIK ((\"$CanPlay\" == \"false\") || (\"$MyPlayMode\" == \"ACTION_Play\")) ? \"close\" : \"goBack\"",
+                "itemUI": "DYNAMIK (\"$MyPlayMode\" == \"ACTION_Play\") ? \"close\" : \"goBack\"",
                 "itemtype": "tile",
                 "itemaction": "$MyPlayMode",
-                "itemimage": "$AlbumArtURI"
+                "itemimage": "$MyAlbumArt3URI"
               },
               {
                 "type": "http-get",
-                "command": "$VolumioURI/api/v1/browse?uri=$MyURI",
+                "command": "$VolumioURI/api/v1/browse?uri=$MyBrowse3URI",
                 "queryresult": "$.navigation.lists[0].items[*]",
                 "itemname": "DYNAMIK JSON.parse(\"$Result\").title",
                 "itemlabel": "DYNAMIK JSON.parse(\"$Result\").album ? JSON.parse(\"$Result\").album : (JSON.parse(\"$Result\").artist ? JSON.parse(\"$Result\").artist : \"\")",
-                "itemimage": "DYNAMIK JSON.parse(\"$Result\").albumart ? \"$VolumioURI\" + JSON.parse(\"$Result\").albumart : \"$AlbumArtURI\"",
+                "itemimage": "DYNAMIK JSON.parse(\"$Result\").albumart ? ((!JSON.parse(\"$Result\").albumart.startsWith(\"http\") ? (\"$VolumioURI\" + JSON.parse(\"$Result\").albumart) : JSON.parse(\"$Result\").albumart)) : \"$MyAlbumArt3URI\"",
                 "evalwrite": [
-                  {
-                    "variable": "MyBrowseName",
-                    "value": "DYNAMIK JSON.parse(\"$Result\").title"
-                  },
-                  {
-                    "variable": "BrowseLevel",
-                    "value": "DYNAMIK $BrowseLevel + 1"
-                  },
-                  {
-                    "variable": "AlbumArtURI",
-                    "value": "DYNAMIK JSON.parse(\"$Result\").albumart ? \"$VolumioURI\" + JSON.parse(\"$Result\").albumart : \"$AlbumArtURI\""
-                  },
-                  {
-                    "variable": "MyURI",
-                    "value": "DYNAMIK JSON.parse(\"$Result\").uri"
-                  },
                   {
                     "variable": "IsFolder",
                     "value": "DYNAMIK $FOLDER_TYPES.includes(JSON.parse(\"$Result\").type)"
                   },
                   {
-                    "variable": "CanPlay",
-                    "value": "DYNAMIK $PLAY_TYPES.includes(JSON.parse(\"$Result\").type)"
-                  },
-                  {
                     "variable": "PlayPayLoad",
                     "value": "$Result"
+                  },
+                  {
+                    "variable": "MyBrowse4Name",
+                    "value": "DYNAMIK JSON.parse(\"$Result\").title"
+                  },
+                  {
+                    "variable": "MyBrowse4URI",
+                    "value": "DYNAMIK JSON.parse(\"$Result\").uri"
+                  },
+                  {
+                    "variable": "MyAlbumArt4URI",
+                    "value": "DYNAMIK JSON.parse(\"$Result\").albumart ? ((!JSON.parse(\"$Result\").albumart.startsWith(\"http\") ? (\"$VolumioURI\" + JSON.parse(\"$Result\").albumart) : JSON.parse(\"$Result\").albumart)) : \"$MyAlbumArt3URI\""
+                  },
+                  {
+                    "variable": "BrowseLevel",
+                    "value": 4
                   }
                 ],
                 "evalnext": [
                   {
-                    "test": "DYNAMIK (\"$IsFolder\" == \"true\") && ($BrowseLevel <= $MAX_BROWSE_LEVEL)",
+                    "test": "DYNAMIK $IsFolder && ($BrowseLevel < $MAX_BROWSE_LEVEL)",
                     "then": "Browse_4",
                     "or": ""
                   }
@@ -805,115 +1009,53 @@
             ]
           },
           "Browse_4": {
-            "label": "$MyBrowseName",
+            "label": "$MyBrowse4Name",
             "commandset": [
               {
                 "type": "static",
                 "command": "{}",
-                "itemUI": "DYNAMIK ((\"$CanPlay\" == \"false\") || (\"$MyPlayMode\" == \"ACTION_Play\")) ? \"close\" : \"goBack\"",
+                "itemUI": "DYNAMIK (\"$MyPlayMode\" == \"ACTION_Play\") ? \"close\" : \"goBack\"",
                 "itemtype": "tile",
                 "itemaction": "$MyPlayMode",
-                "itemimage": "$AlbumArtURI"
+                "itemimage": "$MyAlbumArt4URI"
               },
               {
                 "type": "http-get",
-                "command": "$VolumioURI/api/v1/browse?uri=$MyURI",
+                "command": "$VolumioURI/api/v1/browse?uri=$MyBrowse4URI",
                 "queryresult": "$.navigation.lists[0].items[*]",
                 "itemname": "DYNAMIK JSON.parse(\"$Result\").title",
                 "itemlabel": "DYNAMIK JSON.parse(\"$Result\").album ? JSON.parse(\"$Result\").album : (JSON.parse(\"$Result\").artist ? JSON.parse(\"$Result\").artist : \"\")",
-                "itemimage": "DYNAMIK JSON.parse(\"$Result\").albumart ? \"$VolumioURI\" + JSON.parse(\"$Result\").albumart : \"$AlbumArtURI\"",
+                "itemimage": "DYNAMIK JSON.parse(\"$Result\").albumart ? ((!JSON.parse(\"$Result\").albumart.startsWith(\"http\") ? (\"$VolumioURI\" + JSON.parse(\"$Result\").albumart) : JSON.parse(\"$Result\").albumart)) : \"$MyAlbumArt4URI\"",
                 "evalwrite": [
-                  {
-                    "variable": "MyBrowseName",
-                    "value": "DYNAMIK JSON.parse(\"$Result\").title"
-                  },
-                  {
-                    "variable": "BrowseLevel",
-                    "value": "DYNAMIK $BrowseLevel + 1"
-                  },
-                  {
-                    "variable": "AlbumArtURI",
-                    "value": "DYNAMIK JSON.parse(\"$Result\").albumart ? \"$VolumioURI\" + JSON.parse(\"$Result\").albumart : \"$AlbumArtURI\""
-                  },
-                  {
-                    "variable": "MyURI",
-                    "value": "DYNAMIK JSON.parse(\"$Result\").uri"
-                  },
                   {
                     "variable": "IsFolder",
                     "value": "DYNAMIK $FOLDER_TYPES.includes(JSON.parse(\"$Result\").type)"
                   },
                   {
-                    "variable": "CanPlay",
-                    "value": "DYNAMIK $PLAY_TYPES.includes(JSON.parse(\"$Result\").type)"
-                  },
-                  {
                     "variable": "PlayPayLoad",
                     "value": "$Result"
+                  },
+                  {
+                    "variable": "MyBrowse5Name",
+                    "value": "DYNAMIK JSON.parse(\"$Result\").title"
+                  },
+                  {
+                    "variable": "MyBrowse5URI",
+                    "value": "DYNAMIK JSON.parse(\"$Result\").uri"
+                  },
+                  {
+                    "variable": "MyAlbumArt5URI",
+                    "value": "DYNAMIK JSON.parse(\"$Result\").albumart ? ((!JSON.parse(\"$Result\").albumart.startsWith(\"http\") ? (\"$VolumioURI\" + JSON.parse(\"$Result\").albumart) : JSON.parse(\"$Result\").albumart)) : \"$MyAlbumArt4URI\""
+                  },
+                  {
+                    "variable": "BrowseLevel",
+                    "value": 5
                   }
                 ],
                 "evalnext": [
                   {
-                    "test": "DYNAMIK (\"$IsFolder\" == \"true\") && ($BrowseLevel <= $MAX_BROWSE_LEVEL)",
+                    "test": "DYNAMIK $IsFolder && ($BrowseLevel < $MAX_BROWSE_LEVEL)",
                     "then": "Browse_5",
-                    "or": ""
-                  }
-                ]
-              }
-            ]
-          },
-          "Browse_5": {
-            "label": "$MyBrowseName",
-            "commandset": [
-              {
-                "type": "static",
-                "command": "{}",
-                "itemUI": "DYNAMIK ((\"$CanPlay\" == \"false\") || (\"$MyPlayMode\" == \"ACTION_Play\")) ? \"close\" : \"goBack\"",
-                "itemtype": "tile",
-                "itemaction": "$MyPlayMode",
-                "itemimage": "$AlbumArtURI"
-              },
-              {
-                "type": "http-get",
-                "command": "$VolumioURI/api/v1/browse?uri=$MyURI",
-                "queryresult": "$.navigation.lists[0].items[*]",
-                "itemname": "DYNAMIK JSON.parse(\"$Result\").title",
-                "itemlabel": "DYNAMIK JSON.parse(\"$Result\").album ? JSON.parse(\"$Result\").album : (JSON.parse(\"$Result\").artist ? JSON.parse(\"$Result\").artist : \"\")",
-                "itemimage": "DYNAMIK JSON.parse(\"$Result\").albumart ? \"$VolumioURI\" + JSON.parse(\"$Result\").albumart : \"$AlbumArtURI\"",
-                "evalwrite": [
-                  {
-                    "variable": "MyBrowseName",
-                    "value": "DYNAMIK JSON.parse(\"$Result\").title"
-                  },
-                  {
-                    "variable": "BrowseLevel",
-                    "value": "DYNAMIK $BrowseLevel + 1"
-                  },
-                  {
-                    "variable": "AlbumArtURI",
-                    "value": "DYNAMIK JSON.parse(\"$Result\").albumart ? \"$VolumioURI\" + JSON.parse(\"$Result\").albumart : \"$AlbumArtURI\""
-                  },
-                  {
-                    "variable": "MyURI",
-                    "value": "DYNAMIK JSON.parse(\"$Result\").uri"
-                  },
-                  {
-                    "variable": "IsFolder",
-                    "value": "DYNAMIK $FOLDER_TYPES.includes(JSON.parse(\"$Result\").type)"
-                  },
-                  {
-                    "variable": "CanPlay",
-                    "value": "DYNAMIK $PLAY_TYPES.includes(JSON.parse(\"$Result\").type)"
-                  },
-                  {
-                    "variable": "PlayPayLoad",
-                    "value": "$Result"
-                  }
-                ],
-                "evalnext": [
-                  {
-                    "test": "DYNAMIK (\"$IsFolder\" == \"true\") && ($BrowseLevel <= $MAX_BROWSE_LEVEL)",
-                    "then": "Browse_6",
                     "or": ""
                   }
                 ]
@@ -925,7 +1067,7 @@
             "commandset": [
               {
                 "type": "http-get",
-                "command": "$VolumioURI/api/v1/browse?uri=$MyURI",
+                "command": "$VolumioURI/api/v1/browse?uri=$MyCollectionURI",
                 "queryresult": "$.navigation.lists[0].items[*]",
                 "itemname": "DYNAMIK JSON.parse(\"$Result\").title",
                 "itemlabel": "Radio station",
@@ -947,33 +1089,30 @@
               {
                 "type": "static",
                 "command": "{}",
+                "itemUI": "",
                 "itemtype": "tile",
                 "itemaction": "",
-                "itemimage": "$AlbumArtURI"
+                "itemimage": "$MyAlbumArtCollectionURI"
               },
               {
                 "type": "http-get",
-                "command": "$VolumioURI/api/v1/browse?uri=$MyURI",
+                "command": "$VolumioURI/api/v1/browse?uri=$MyCollectionURI",
                 "queryresult": "$.navigation.lists[0].items[*]",
                 "itemname": "DYNAMIK JSON.parse(\"$Result\").title",
                 "itemlabel": "Artist collection",
-                "itemimage": "DYNAMIK \"$VolumioURI\" + JSON.parse(\"$Result\").albumart",
+                "itemimage": "DYNAMIK JSON.parse(\"$Result\").albumart ? ((!JSON.parse(\"$Result\").albumart.startsWith(\"http\") ? (\"$VolumioURI\" + JSON.parse(\"$Result\").albumart) : JSON.parse(\"$Result\").albumart)) : \"$MyAlbumArtCollectionURI\"",
                 "evalwrite": [
                   {
-                    "variable": "MyURI",
+                    "variable": "MyArtistsURI",
                     "value": "DYNAMIK JSON.parse(\"$Result\").uri"
                   },
                   {
-                    "variable": "AlbumArtURI",
-                    "value": "DYNAMIK JSON.parse(\"$Result\").albumart ? \"$VolumioURI\" + JSON.parse(\"$Result\").albumart : \"$AlbumArtURI\""
+                    "variable": "MyAlbumArtArtistsURI",
+                    "value": "DYNAMIK JSON.parse(\"$Result\").albumart ? ((!JSON.parse(\"$Result\").albumart.startsWith(\"http\") ? (\"$VolumioURI\" + JSON.parse(\"$Result\").albumart) : JSON.parse(\"$Result\").albumart)) : \"$MyAlbumArtCollectionURI\""
                   },
                   {
-                    "variable": "MyArtist",
+                    "variable": "ArtistName",
                     "value": "DYNAMIK JSON.parse(\"$Result\").title"
-                  },
-                  {
-                    "variable": "CanPlay",
-                    "value": "DYNAMIK $PLAY_TYPES.includes(JSON.parse(\"$Result\").type)"
                   },
                   {
                     "variable": "PlayPayLoad",
@@ -996,30 +1135,26 @@
               {
                 "type": "static",
                 "command": "{}",
-                "itemUI": "DYNAMIK ((\"$CanPlay\" == \"false\") || (\"$MyPlayMode\" == \"ACTION_Play\")) ? \"close\" : \"goBack\"",
+                "itemUI": "DYNAMIK (\"$MyPlayMode\" == \"ACTION_Play\") ? \"close\" : \"goBack\"",
                 "itemtype": "tile",
                 "itemaction": "$MyPlayMode",
-                "itemimage": "$AlbumArtURI"
+                "itemimage": "$MyAlbumArtArtistsURI"
               },
               {
                 "type": "http-get",
-                "command": "$VolumioURI/api/v1/browse?uri=$MyURI",
+                "command": "$VolumioURI/api/v1/browse?uri=$MyArtistsURI",
                 "queryresult": "$.navigation.lists[0].items[*]",
                 "itemname": "DYNAMIK JSON.parse(\"$Result\").title",
-                "itemlabel": "$MyArtist",
-                "itemimage": "DYNAMIK \"$VolumioURI\" + JSON.parse(\"$Result\").albumart",
+                "itemlabel": "$ArtistName",
+                "itemimage": "DYNAMIK JSON.parse(\"$Result\").albumart ? ((!JSON.parse(\"$Result\").albumart.startsWith(\"http\") ? (\"$VolumioURI\" + JSON.parse(\"$Result\").albumart) : JSON.parse(\"$Result\").albumart)) : \"$MyAlbumArtArtistsURI\"",
                 "evalwrite": [
                   {
                     "variable": "MyURI",
                     "value": "DYNAMIK JSON.parse(\"$Result\").uri"
                   },
                   {
-                    "variable": "AlbumArtURI",
-                    "value": "DYNAMIK JSON.parse(\"$Result\").albumart ? \"$VolumioURI\" + JSON.parse(\"$Result\").albumart : \"$AlbumArtURI\""
-                  },
-                  {
-                    "variable": "CanPlay",
-                    "value": "DYNAMIK $PLAY_TYPES.includes(JSON.parse(\"$Result\").type)"
+                    "variable": "MyAlbumArtURI",
+                    "value": "DYNAMIK JSON.parse(\"$Result\").albumart ? ((!JSON.parse(\"$Result\").albumart.startsWith(\"http\") ? (\"$VolumioURI\" + JSON.parse(\"$Result\").albumart) : JSON.parse(\"$Result\").albumart)) : \"$MyAlbumArtArtistsURI\""
                   },
                   {
                     "variable": "PlayPayLoad",
@@ -1042,29 +1177,26 @@
               {
                 "type": "static",
                 "command": "{}",
+                "itemUI": "",
                 "itemtype": "tile",
                 "itemaction": "",
-                "itemimage": "$AlbumArtURI"
+                "itemimage": "$MyAlbumArtCollectionURI"
               },
               {
                 "type": "http-get",
-                "command": "$VolumioURI/api/v1/browse?uri=$MyURI",
+                "command": "$VolumioURI/api/v1/browse?uri=$MyCollectionURI",
                 "queryresult": "$.navigation.lists[0].items[*]",
                 "itemname": "DYNAMIK JSON.parse(\"$Result\").title",
                 "itemlabel": "DYNAMIK JSON.parse(\"$Result\").artist",
-                "itemimage": "DYNAMIK \"$VolumioURI\" + JSON.parse(\"$Result\").albumart",
+                "itemimage": "DYNAMIK JSON.parse(\"$Result\").albumart ? ((!JSON.parse(\"$Result\").albumart.startsWith(\"http\") ? (\"$VolumioURI\" + JSON.parse(\"$Result\").albumart) : JSON.parse(\"$Result\").albumart)) : \"$MyAlbumArtCollectionURI\"",
                 "evalwrite": [
                   {
                     "variable": "MyURI",
                     "value": "DYNAMIK JSON.parse(\"$Result\").uri"
                   },
                   {
-                    "variable": "AlbumArtURI",
-                    "value": "DYNAMIK JSON.parse(\"$Result\").albumart ? \"$VolumioURI\" + JSON.parse(\"$Result\").albumart : \"$AlbumArtURI\""
-                  },
-                  {
-                    "variable": "CanPlay",
-                    "value": "DYNAMIK $PLAY_TYPES.includes(JSON.parse(\"$Result\").type)"
+                    "variable": "MyAlbumArtURI",
+                    "value": "DYNAMIK JSON.parse(\"$Result\").albumart ? ((!JSON.parse(\"$Result\").albumart.startsWith(\"http\") ? (\"$VolumioURI\" + JSON.parse(\"$Result\").albumart) : JSON.parse(\"$Result\").albumart)) : \"$MyAlbumArtCollectionURI\""
                   },
                   {
                     "variable": "PlayPayLoad",
@@ -1087,29 +1219,26 @@
               {
                 "type": "static",
                 "command": "{}",
+                "itemUI": "",
                 "itemtype": "tile",
                 "itemaction": "",
-                "itemimage": "$AlbumArtURI"
+                "itemimage": "$MyAlbumArtCollectionURI"
               },
               {
                 "type": "http-get",
-                "command": "$VolumioURI/api/v1/browse?uri=$MyURI",
+                "command": "$VolumioURI/api/v1/browse?uri=$MyCollectionURI",
                 "queryresult": "$.navigation.lists[0].items[*]",
                 "itemname": "DYNAMIK JSON.parse(\"$Result\").title",
                 "itemlabel": "Spotify playlist",
-                "itemimage": "DYNAMIK JSON.parse(\"$Result\").albumart",
+                "itemimage": "DYNAMIK JSON.parse(\"$Result\").albumart ? ((!JSON.parse(\"$Result\").albumart.startsWith(\"http\") ? (\"$VolumioURI\" + JSON.parse(\"$Result\").albumart) : JSON.parse(\"$Result\").albumart)) : \"$MyAlbumArtCollectionURI\"",
                 "evalwrite": [
                   {
                     "variable": "MyURI",
                     "value": "DYNAMIK JSON.parse(\"$Result\").uri"
                   },
                   {
-                    "variable": "AlbumArtURI",
-                    "value": "DYNAMIK JSON.parse(\"$Result\").albumart ? \"$VolumioURI\" + JSON.parse(\"$Result\").albumart : \"$AlbumArtURI\""
-                  },
-                  {
-                    "variable": "CanPlay",
-                    "value": "DYNAMIK $PLAY_TYPES.includes(JSON.parse(\"$Result\").type)"
+                    "variable": "MyAlbumArtURI",
+                    "value": "DYNAMIK JSON.parse(\"$Result\").albumart ? ((!JSON.parse(\"$Result\").albumart.startsWith(\"http\") ? (\"$VolumioURI\" + JSON.parse(\"$Result\").albumart) : JSON.parse(\"$Result\").albumart)) : \"$MyAlbumArtCollectionURI\""
                   },
                   {
                     "variable": "PlayPayLoad",
@@ -1132,29 +1261,26 @@
               {
                 "type": "static",
                 "command": "{}",
+                "itemUI": "",
                 "itemtype": "tile",
                 "itemaction": "",
-                "itemimage": "$AlbumArtURI"
+                "itemimage": "$MyAlbumArtCollectionURI"
               },
               {
                 "type": "http-get",
-                "command": "$VolumioURI/api/v1/browse?uri=$MyURI",
+                "command": "$VolumioURI/api/v1/browse?uri=$MyCollectionURI",
                 "queryresult": "$.navigation.lists[0].items[*]",
                 "itemname": "DYNAMIK JSON.parse(\"$Result\").title",
                 "itemlabel": "DYNAMIK JSON.parse(\"$Result\").album",
-                "itemimage": "DYNAMIK JSON.parse(\"$Result\").albumart",
+                "itemimage": "DYNAMIK JSON.parse(\"$Result\").albumart ? ((!JSON.parse(\"$Result\").albumart.startsWith(\"http\") ? (\"$VolumioURI\" + JSON.parse(\"$Result\").albumart) : JSON.parse(\"$Result\").albumart)) : \"$MyAlbumArtCollectionURI\"",
                 "evalwrite": [
                   {
                     "variable": "MyURI",
                     "value": "DYNAMIK JSON.parse(\"$Result\").uri"
                   },
                   {
-                    "variable": "AlbumArtURI",
-                    "value": "DYNAMIK JSON.parse(\"$Result\").albumart ? \"$VolumioURI\" + JSON.parse(\"$Result\").albumart : \"$AlbumArtURI\""
-                  },
-                  {
-                    "variable": "CanPlay",
-                    "value": "DYNAMIK $PLAY_TYPES.includes(JSON.parse(\"$Result\").type)"
+                    "variable": "MyAlbumArtURI",
+                    "value": "DYNAMIK JSON.parse(\"$Result\").albumart ? ((!JSON.parse(\"$Result\").albumart.startsWith(\"http\") ? (\"$VolumioURI\" + JSON.parse(\"$Result\").albumart) : JSON.parse(\"$Result\").albumart)) : \"$MyAlbumArtCollectionURI\""
                   },
                   {
                     "variable": "PlayPayLoad",
@@ -1177,10 +1303,10 @@
               {
                 "type": "static",
                 "command": "{}",
-                "itemUI": "DYNAMIK ((\"$CanPlay\" == \"false\") || (\"$MyPlayMode\" == \"ACTION_Play\")) ? \"close\" : \"goBack\"",
+                "itemUI": "DYNAMIK (\"$MyPlayMode\" == \"ACTION_Play\") ? \"close\" : \"goBack\"",
                 "itemtype": "tile",
                 "itemaction": "$MyPlayMode",
-                "itemimage": "$AlbumArtURI"
+                "itemimage": "$MyAlbumArtURI"
               },
               {
                 "type": "http-get",
@@ -1190,7 +1316,7 @@
                 "itemname": "DYNAMIK JSON.parse(\"$Result\").title",
                 "itemlabel": "DYNAMIK JSON.parse(\"$Result\").album",
                 "itemaction": "$MyPlayMode",
-                "itemimage": "DYNAMIK JSON.parse(\"$Result\").albumart",
+                "itemimage": "DYNAMIK JSON.parse(\"$Result\").albumart ? ((!JSON.parse(\"$Result\").albumart.startsWith(\"http\") ? (\"$VolumioURI\" + JSON.parse(\"$Result\").albumart) : JSON.parse(\"$Result\").albumart)) : \"$MyAlbumArtURI\"",
                 "evalwrite": [
                   {
                     "variable": "PlayPayLoad",
@@ -1204,8 +1330,14 @@
             "label": "",
             "commandset": [
               {
-                "type": "webSocket",
-                "command": "{\"call\":\"replaceAndPlay\", \"message\":$PlayPayLoad}"
+                "type": "socketIO",
+                "command": {
+                  "connection": "$VolumioURI",
+                  "message": {
+                    "call": "replaceAndPlay",
+                    "message": "$PlayPayLoad"
+                  }
+                }
               }
             ]
           },
@@ -1213,8 +1345,14 @@
             "label": "",
             "commandset": [
               {
-                "type": "webSocket",
-                "command": "{\"call\":\"addToQueue\", \"message\":$PlayPayLoad}"
+                "type": "socketIO",
+                "command": {
+                  "connection": "$VolumioURI",
+                  "message": {
+                    "call": "addToQueue",
+                    "message": "$PlayPayLoad"
+                  }
+                }
               }
             ]
           }
@@ -1232,15 +1370,15 @@
                 "queryresult": "$.navigation.lists[*]",
                 "itemname": "DYNAMIK JSON.parse(\"$Result\").name",
                 "itemlabel": "",
-                "itemimage": "DYNAMIK JSON.parse(\"$Result\").albumart ? \"$VolumioURI\" + JSON.parse(\"$Result\").albumart : \"$AlbumArtURI\"",
+                "itemimage": "DYNAMIK JSON.parse(\"$Result\").albumart ? ((!JSON.parse(\"$Result\").albumart.startsWith(\"http\") ? (\"$VolumioURI\" + JSON.parse(\"$Result\").albumart) : JSON.parse(\"$Result\").albumart)) : \"$MyAlbumArtURI\"",
                 "evalwrite": [
                   {
                     "variable": "MyBrowseName",
                     "value": "DYNAMIK JSON.parse(\"$Result\").name"
                   },
                   {
-                    "variable": "AlbumArtURI",
-                    "value": "DYNAMIK JSON.parse(\"$Result\").albumart ? \"$VolumioURI\" + JSON.parse(\"$Result\").albumart : \"$AlbumArtURI\""
+                    "variable": "MyAlbumArtURI",
+                    "value": "DYNAMIK JSON.parse(\"$Result\").albumart ? ((!JSON.parse(\"$Result\").albumart.startsWith(\"http\") ? (\"$VolumioURI\" + JSON.parse(\"$Result\").albumart) : JSON.parse(\"$Result\").albumart)) : \"$MyAlbumArtURI\""
                   },
                   {
                     "variable": "MyURI",
@@ -1256,15 +1394,11 @@
                   },
                   {
                     "variable": "URIStack",
-                    "value": "[{\\\"name\\\":\\\"$MyBrowseName\\\",\\\"label\\\":\\\"\\\",\\\"imageurl\\\":\\\"$AlbumArtURI\\\",\\\"navigation\\\":\\\"Browse\\\",\\\"uri\\\":\\\"$MyURI\\\",\\\"type\\\":\\\"$ItemType\\\"}, {\\\"name\\\":\\\"Home\\\",\\\"label\\\":\\\"\\\",\\\"imageurl\\\":\\\"\\\",\\\"navigation\\\":\\\"Home\\\",\\\"uri\\\":\\\"/\\\",\\\"type\\\":\\\"\\\"}]"
+                    "value": "[{\\\"name\\\":\\\"$MyBrowseName\\\",\\\"label\\\":\\\"\\\",\\\"imageurl\\\":\\\"$MyAlbumArtURI\\\",\\\"navigation\\\":\\\"Browse\\\",\\\"uri\\\":\\\"$MyURI\\\",\\\"type\\\":\\\"$ItemType\\\"}, {\\\"name\\\":\\\"Home\\\",\\\"label\\\":\\\"\\\",\\\"imageurl\\\":\\\"\\\",\\\"navigation\\\":\\\"Home\\\",\\\"uri\\\":\\\"/\\\",\\\"type\\\":\\\"\\\"}]"
                   },
                   {
                     "variable": "Shortcut",
-                    "value": "{\\\"name\\\":\\\"$MyBrowseName\\\",\\\"label\\\":\\\"\\\",\\\"imageurl\\\":\\\"$AlbumArtURI\\\",\\\"navigation\\\":\\\"Browse\\\",\\\"uri\\\":\\\"$MyURI\\\",\\\"type\\\":\\\"$ItemType\\\"}"
-                  },
-                  {
-                    "variable": "CanPlay",
-                    "value": "DYNAMIK $PLAY_TYPES.includes(JSON.parse(\"$Result\").type)"
+                    "value": "{\\\"name\\\":\\\"$MyBrowseName\\\",\\\"label\\\":\\\"\\\",\\\"imageurl\\\":\\\"$MyAlbumArtURI\\\",\\\"navigation\\\":\\\"Browse\\\",\\\"uri\\\":\\\"$MyURI\\\",\\\"type\\\":\\\"$ItemType\\\"}"
                   },
                   {
                     "variable": "BrowseCommand",
@@ -1287,9 +1421,10 @@
               {
                 "type": "static",
                 "command": "{}",
+                "itemUI": "close",
                 "itemtype": "tile",
                 "itemaction": "",
-                "itemimage": "$AlbumArtURI"
+                "itemimage": "$MyAlbumArtURI"
               },
               {
                 "type": "http-get",
@@ -1297,7 +1432,7 @@
                 "queryresult": "$.navigation.lists[0].items[*]",
                 "itemname": "DYNAMIK JSON.parse(\"$Result\").title ? JSON.parse(\"$Result\").title : JSON.parse(\"$Result\").name",
                 "itemlabel": "DYNAMIK JSON.parse(\"$Result\").album ? JSON.parse(\"$Result\").album : (JSON.parse(\"$Result\").artist ? JSON.parse(\"$Result\").artist : \"\")",
-                "itemimage": "DYNAMIK JSON.parse(\"$Result\").albumart ? \"$VolumioURI\" + JSON.parse(\"$Result\").albumart : \"$AlbumArtURI\"",
+                "itemimage": "DYNAMIK JSON.parse(\"$Result\").albumart ? ((!JSON.parse(\"$Result\").albumart.startsWith(\"http\") ? (\"$VolumioURI\" + JSON.parse(\"$Result\").albumart) : JSON.parse(\"$Result\").albumart)) : \"$MyAlbumArtURI\"",
                 "evalwrite": [
                   {
                     "variable": "MyBrowseName",
@@ -1308,8 +1443,8 @@
                     "value": "DYNAMIK JSON.parse(\"$Result\").album ? JSON.parse(\"$Result\").album : (JSON.parse(\"$Result\").artist ? JSON.parse(\"$Result\").artist : \"\")"
                   },
                   {
-                    "variable": "AlbumArtURI",
-                    "value": "DYNAMIK JSON.parse(\"$Result\").albumart ? \"$VolumioURI\" + JSON.parse(\"$Result\").albumart : \"$AlbumArtURI\""
+                    "variable": "MyAlbumArtURI",
+                    "value": "DYNAMIK JSON.parse(\"$Result\").albumart ? ((!JSON.parse(\"$Result\").albumart.startsWith(\"http\") ? (\"$VolumioURI\" + JSON.parse(\"$Result\").albumart) : JSON.parse(\"$Result\").albumart)) : \"$MyAlbumArtURI\""
                   },
                   {
                     "variable": "MyURI",
@@ -1325,15 +1460,11 @@
                   },
                   {
                     "variable": "URIStack",
-                    "value": "DYNAMIK JSON.stringify(JSON.parse(\"[{\\\"name\\\":\\\"$MyBrowseName\\\",\\\"label\\\":\\\"$MyBrowseLabel\\\",\\\"imageurl\\\":\\\"$AlbumArtURI\\\",\\\"navigation\\\":\\\"Browse\\\",\\\"uri\\\":\\\"$MyURI\\\",\\\"type\\\":\\\"$ItemType\\\"}]\").concat(JSON.parse(\"$URIStack\"))).replace(/\\\"/g,'\\\\\"')"
+                    "value": "DYNAMIK JSON.stringify(JSON.parse(\"[{\\\"name\\\":\\\"$MyBrowseName\\\",\\\"label\\\":\\\"$MyBrowseLabel\\\",\\\"imageurl\\\":\\\"$MyAlbumArtURI\\\",\\\"navigation\\\":\\\"Browse\\\",\\\"uri\\\":\\\"$MyURI\\\",\\\"type\\\":\\\"$ItemType\\\"}]\").concat(JSON.parse(\"$URIStack\"))).replace(/\\\"/g,'\\\\\"')"
                   },
                   {
                     "variable": "Shortcut",
-                    "value": "{\\\"name\\\":\\\"$MyBrowseName\\\",\\\"label\\\":\\\"\\\",\\\"imageurl\\\":\\\"$AlbumArtURI\\\",\\\"navigation\\\":\\\"Browse\\\",\\\"uri\\\":\\\"$MyURI\\\",\\\"type\\\":\\\"$ItemType\\\"}"
-                  },
-                  {
-                    "variable": "CanPlay",
-                    "value": "DYNAMIK $PLAY_TYPES.includes(JSON.parse(\"$Result\").type)"
+                    "value": "{\\\"name\\\":\\\"$MyBrowseName\\\",\\\"label\\\":\\\"\\\",\\\"imageurl\\\":\\\"$MyAlbumArtURI\\\",\\\"navigation\\\":\\\"Browse\\\",\\\"uri\\\":\\\"$MyURI\\\",\\\"type\\\":\\\"$ItemType\\\"}"
                   },
                   {
                     "variable": "BrowseCommand",
@@ -1356,15 +1487,16 @@
               {
                 "type": "static",
                 "command": "{}",
+                "itemUI": "close",
                 "itemtype": "tile",
                 "itemaction": "",
-                "itemimage": "$AlbumArtURI"
+                "itemimage": "$MyAlbumArtURI"
               },
               {
                 "type": "static",
                 "command": "$BrowseCommand",
                 "queryresult": "$.*",
-                "itemui": "reload",
+                "itemUI": "goBack",
                 "itemname": "DYNAMIK JSON.parse(\"$Result\").name",
                 "itemlabel": "DYNAMIK JSON.parse(\"$Result\").label",
                 "itemimage": "DYNAMIK JSON.parse(\"$Result\").imageurl",
@@ -1374,8 +1506,8 @@
                     "value": "DYNAMIK [\"Cancel\", \"AddShortcut\", \"RemoveShortcut\"].includes(JSON.parse(\"$Result\").navigation) ? JSON.parse(\"$URIStack\")[1].name : \"$MyBrowseName\""
                   },
                   {
-                    "variable": "AlbumArtURI",
-                    "value": "DYNAMIK [\"Cancel\", \"AddShortcut\", \"RemoveShortcut\"].includes(JSON.parse(\"$Result\").navigation) ? JSON.parse(\"$URIStack\")[1].imageurl : \"$AlbumArtURI\""
+                    "variable": "MyAlbumArtURI",
+                    "value": "DYNAMIK [\"Cancel\", \"AddShortcut\", \"RemoveShortcut\"].includes(JSON.parse(\"$Result\").navigation) ? JSON.parse(\"$URIStack\")[1].imageurl : \"$MyAlbumArtURI\""
                   },
                   {
                     "variable": "MyURI",
@@ -1400,13 +1532,10 @@
                   {
                     "variable": "CommandShortcuts",
                     "value": "DYNAMIK \"$MyShortcuts\".replace(\"[\",\"\").replace(\"]\",\"\") + (![\"\",\"[]\"].includes(\"$MyShortcuts\") ? \",\" : \"\")"
-                  }
-                ],
-                "evaldo": [
+                  },
                   {
-                    "test": "DYNAMIK [\"AddShortcut\", \"RemoveShortcut\"].includes(JSON.parse(\"$Result\").navigation)",
-                    "then": "__PERSIST",
-                    "or": ""
+                    "variable": "Persist",
+                    "value": "DYNAMIK [\"AddShortcut\", \"RemoveShortcut\"].includes(JSON.parse(\"$Result\").navigation)"
                   }
                 ],
                 "evalnext": [
@@ -1455,8 +1584,16 @@
             "label": "",
             "commandset": [
               {
-                "type": "webSocket",
-                "command": "{\"call\":\"play\", \"message\":{\"value\": \"$ListIndex\"}}"
+                "type": "socketIO",
+                "command": {
+                  "connection": "$VolumioURI",
+                  "message": {
+                    "call": "play",
+                    "message": {
+                      "value": "$ListIndex"
+                    }
+                  }
+                }
               }
             ]
           },
@@ -1464,8 +1601,14 @@
             "label": "",
             "commandset": [
               {
-                "type": "webSocket",
-                "command": "{\"call\":\"clearQueue\"}"
+                "type": "socketIO",
+                "command": {
+                  "connection": "$VolumioURI",
+                  "message": {
+                    "call": "clearQueue",
+                    "message": ""
+                  }
+                }
               }
             ]
           }
