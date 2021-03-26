@@ -162,8 +162,8 @@
                 "command": {"connection": "$VolumioURI", "message": {"call": "stop", "message": ""}},
                 "evalwrite": [{"variable": "Playing", "value": "Music Stopped"}]
             },
-            "PAUSE": {"label": "", "type": "static", "command": "", "evaldo": [{"test": "DYNAMIK $PlayFlag", "then": "PLAY_TOGGLE", "or": ""}]},
-            "PLAY": {"label": "", "type": "static", "command": "", "evaldo": [{"test": "DYNAMIK !$PlayFlag", "then": "PLAY_TOGGLE", "or": ""}]},
+            "PAUSE": {"label": "", "type": "static", "command": "", "evaldo": [{"test": "DYNAMIK $PlayFlag", "then": "PLAY TOGGLE", "or": ""}]},
+            "PLAY": {"label": "", "type": "static", "command": "", "evaldo": [{"test": "DYNAMIK !$PlayFlag", "then": "PLAY TOGGLE", "or": ""}]},
             "PLAY TOGGLE": {"label": "", "type": "socketIO", "command": {"connection": "$VolumioURI", "message": {"call": "toggle", "message": ""}}},
             "__REPEAT ON": {"label": "", "type": "socketIO", "command": {"connection": "$VolumioURI", "message": {"call": "setRepeat", "message": {"value": true}}}},
             "__REPEAT OFF": {"label": "", "type": "socketIO", "command": {"connection": "$VolumioURI", "message": {"call": "setRepeat", "message": {"value": false}}}},
