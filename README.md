@@ -2,6 +2,7 @@
 volumio config for meta
 
 https://www.youtube.com/watch?v=ybQrpgSK1yM&t=34s
+https://www.youtube.com/watch?v=loi-8xsP1_8
 
 Support meta V0.8.15 onwards.
 
