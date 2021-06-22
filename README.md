@@ -9,13 +9,13 @@ Support meta V0.8.15 onwards.
 ### Step 1 : Install in the meta
 #### Prerequisite
 In order to use this file, you need to have the metadriver installed. Please refere to this page for further instructions:
-https://github.com/jac459/metadriver
+https://github.com/jac459/meta
 #### Installation
-To install, downnoad the volumio.json file and move it to the "activated" folder.
+To install, downnoad the volumio.json file and move it to the "active" folder.
 
 ### Step 2 : Install in the neeo app
 In the neeo app, add a device and search for Volumio.
-You will find a driver named: Volumio JAC MetaDriver Volumio.
+You will find a driver named: Volumio.
 This is the one.
 ##### Add the device in the room you want.
 ##### (Mandatory) go to the recipe list and make the volumio recipe visible.
