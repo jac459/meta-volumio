@@ -8,7 +8,7 @@ Support meta V0.8.15 onwards.
 ## Setup
 ### Step 1 : Install in the meta
 #### Prerequisite
-In order to use this file, you need to have the metadriver installed. Please refere to this page for further instructions:
+In order to use this file, you need to have the meta installed. Please refere to this page for further instructions:
 https://github.com/jac459/meta
 #### Installation
 To install, downnoad the volumio.json file and move it to the "active" folder.
