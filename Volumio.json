@@ -6,7 +6,7 @@
     "discover": {
         "welcomeheadertext": "Choose your Volumio Instance",
         "welcomedescription": "powered by meta",
-        "command": {"type": "static", "command": "$LocalDevices", "queryresult": ["$.[?(@.short=='_raop._tcp.local'&&@.port==5000)]"]}
+        "command": {"type": "mDNS", "command": "", "queryresult": ["$.[?(@.short=='_raop._tcp.local'&&@.port==5000)]"]}
     },
     "template": {
         "dynamicname": "DYNAMIK_INST_START DYNAMIK JSON.parse(\"$Result\").name.split('@')[1].split('.')[0] + ' - ' + JSON.parse(\"$Result\").ip DYNAMIK_INST_END",
