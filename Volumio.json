@@ -42,15 +42,7 @@
                     {"variable": "DisplayShuffleRepeat", "value": "DYNAMIK (JSON.parse(\"$Result\").repeat ? \"REPEAT\" : \"\") + \" \" + (JSON.parse(\"$Result\").random ? \"SHUFFLE\" : \"\")"}
                 ]
             },
-            "VolumioProgress": {"type": "static", "command": ".", "pooltime": "3000", "poolduration": "", "queryresult": "", "evaldo": [{"test": true, "then": "__REFRESHPROGRESS", "or": ""}]},
-            "SaveShortcuts": {
-                "type": "static",
-                "command": "SaveShortcuts",
-                "pooltime": "5000",
-                "poolduration": "",
-                "queryresult": "$.",
-                "evaldo": [{"test": "DYNAMIK $Persist", "then": "__PERSIST", "or": ""}]
-            }
+            "VolumioProgress": {"type": "static", "command": ".", "pooltime": "3000", "poolduration": "", "queryresult": "", "evaldo": [{"test": true, "then": "__REFRESHPROGRESS", "or": ""}]}
         },
         "variables": {
             "VolumioURI": "http://DYNAMIK_INST_START DYNAMIK JSON.parse(\"$Result\").ip DYNAMIK_INST_END",
@@ -60,10 +52,9 @@
             "PlayFlag": false,
             "Title": "",
             "Playing": "",
-            "ImageLocation": "https://raw.githubusercontent.com/jac459/metadriver/master/pictures",
-            "ImageSearch": "https://raw.githubusercontent.com/jac459/meta-plex/main/pics/search.jpg",
+            "ImageLocation": "https://raw.githubusercontent.com/mherwege/meta-volumio/shortcuts/pics",
             "CommandShortcuts": "",
-            "CommandCollection": "{\"name\":\"Radio\",\"label\":\"Radio Stations\",\"imageurl\":\"$ImageLocation/Radio_Takchang.jpg\",\"navigation\":\"Radio\",\"uri\":\"radio/favourites\"},{\"name\":\"Artists\",\"label\":\"Artists List\",\"imageurl\":\"$ImageLocation/guitar.jpg\",\"navigation\":\"Artists\",\"uri\":\"artists://\"},{\"name\":\"Albums\",\"label\":\"Albums List\",\"imageurl\":\"$ImageLocation/record.jpg\",\"navigation\":\"AllAlbums\",\"uri\":\"albums://\"},{\"name\":\"Playlist\",\"label\":\"Playlists\",\"imageurl\":\"$ImageLocation/fav.jpg\",\"navigation\":\"Playlist\",\"uri\":\"playlists\"},{\"name\":\"Spotify\",\"label\":\"Spotify Connect\",\"imageurl\":\"$ImageLocation/spotify.jpg\",\"navigation\":\"Spotify\",\"uri\":\"spotify/playlists\"}",
+            "CommandCollection": "{\"name\":\"Radio\",\"label\":\"Radio Stations\",\"imageurl\":\"$ImageLocation/radio.jpg\",\"navigation\":\"Radio\",\"uri\":\"radio/favourites\"},{\"name\":\"Artists\",\"label\":\"Artists List\",\"imageurl\":\"$ImageLocation/guitar.jpg\",\"navigation\":\"Artists\",\"uri\":\"artists://\"},{\"name\":\"Albums\",\"label\":\"Albums List\",\"imageurl\":\"$ImageLocation/record.jpg\",\"navigation\":\"AllAlbums\",\"uri\":\"albums://\"},{\"name\":\"Playlist\",\"label\":\"Playlists\",\"imageurl\":\"$ImageLocation/fav.jpg\",\"navigation\":\"Playlist\",\"uri\":\"playlists\"},{\"name\":\"Spotify\",\"label\":\"Spotify Connect\",\"imageurl\":\"$ImageLocation/spotify.jpg\",\"navigation\":\"Spotify\",\"uri\":\"spotify/playlists\"}",
             "BrowseCommand": "",
             "BrowseLevel": 0,
             "MAX_BROWSE_LEVEL": 5,
@@ -100,6 +91,7 @@
             "PlayPayLoad": "",
             "AlbumCoverURI": "",
             "PutInQueue": false,
+            "QueueIndex": 0,
             "MyPlayMode": "ACTION_Play",
             "Mute": false,
             "VolumePlayed": 0,
@@ -111,7 +103,6 @@
             "Repeat": false,
             "Shuffle": false,
             "DisplayShuffleRepeat": "",
-            "Persist": false,
             "Collection0": "[]",
             "Collection1": "[]",
             "Collection2": "[]",
@@ -199,7 +190,7 @@
                     {"variable": "CommandShortcuts", "value": "DYNAMIK \"$MyShortcuts\".replace(\"[\",\"\").replace(\"]\",\"\") + (![\"\",\"[]\"].includes(\"$MyShortcuts\") ? \",\" : \"\")"}
                 ]
             },
-            "POWER OFF": {"label": "", "type": "static", "command": "", "evaldo": [{"test": "DYNAMIK $Persist", "then": "__PERSIST", "or": ""}, {"test": true, "then": "__CLEANUP", "or": ""}]},
+            "POWER OFF": {"label": "", "type": "static", "command": "", "evaldo": [{"test": true, "then": "__CLEANUP", "or": ""}]},
             "CURSOR LEFT": {"label": "", "type": "static", "command": "", "evaldo": [{"test": true, "then": "PREVIOUS", "or": ""}]},
             "CURSOR RIGHT": {"label": "", "type": "static", "command": "", "evaldo": [{"test": true, "then": "NEXT", "or": ""}]},
             "CURSOR ENTER": {"label": "", "type": "static", "command": "", "evaldo": [{"test": true, "then": "PLAY TOGGLE", "or": ""}]},
@@ -221,7 +212,6 @@
                 "command":"DYNAMIK let pkt = {\"call\":\"seek\", \"message\":\"\"}; pkt.message = Math.round(0.01*Number($Progress)*$Duration); pkt;"
             },
             "__GETSTATE": {"label": "", "type": "socketIO", "command": "{\"call\": \"getState\", \"message\": \"\"}"},
-            "__PERSIST": {"label": "", "type": "static", "evalwrite": [{"variable": "Persist", "value": false}], "command": ""},
             "__FETCHCOLLECTION0": {
                 "type": "http-get", "command": "$VolumioURI/api/v1/browse?uri=$MyBrowse0URI",
                 "queryresult": "$.navigation.lists[0].items",
@@ -328,7 +318,7 @@
                                 "itemlabel": "Search Collection",
                                 "itemaction": "",
                                 "itemUI": "",
-                                "itemimage": "$ImageSearch",
+                                "itemimage": "$ImageLocation/search.jpg",
                                 "evalnext": [{"test": true, "then": "Browse0Search"}]
                             },
                             {
@@ -382,7 +372,7 @@
                                 "itemlabel": "Search Collection",
                                 "itemaction": "",
                                 "itemUI": "",
-                                "itemimage": "$ImageSearch",
+                                "itemimage": "$ImageLocation/search.jpg",
                                 "evalnext": [{"test": true, "then": "Browse0Search"}]
                             },
                             {
@@ -421,14 +411,14 @@
                     "Browse0Search": {
                         "label": "Search",
                         "commandset": [
-                            {"type": "static", "command": ".", "itemtype": "tile", "itemaction": "", "itemUI": "","itemimage": "$ImageSearch"},
+                            {"type": "static", "command": ".", "itemtype": "tile", "itemaction": "", "itemUI": "","itemimage": "$ImageLocation/search.jpg"},
                             {
                                 "type": "static",
                                 "command": "DYNAMIK let col = $Collection0; if (\"$Token0\".length>0) {col = col.filter((colI) => {return colI.title.toUpperCase().startsWith(\"$Token0\")})}; let srh = $Search; let res = []; let tuple; srh.forEach((seI) => {let filtok = \"$Token0\" + seI; let interRes = col.filter((colI) => {return colI.title.toUpperCase().startsWith(filtok)}); if (interRes.length>0) {tuple = {\"title\":\"\"}; tuple.token = filtok; tuple.title = filtok + \" - \" + interRes.length + \" items.\"; tuple.subtitle = interRes[0].title + \" - \" + interRes[interRes.length -1].title; res.push(tuple)}}); res;",
                                 "queryresult": "$.*",
                                 "itemname": "DYNAMIK JSON.parse(\"$Result\").title",
                                 "itemlabel": "DYNAMIK JSON.parse(\"$Result\").subtitle",
-                                "itemimage": "$ImageSearch",
+                                "itemimage": "$ImageLocation/search.jpg",
                                 "evalnext": [{"test": true, "then": "Browse0Filtered", "or": ""}],
                                 "evalwrite": [{"variable": "Token0", "value": "DYNAMIK JSON.parse(\"$Result\").token"}]
                             }
@@ -452,7 +442,7 @@
                                 "itemlabel": "Search Collection",
                                 "itemaction": "",
                                 "itemUI": "",
-                                "itemimage": "$ImageSearch",
+                                "itemimage": "$ImageLocation/search.jpg",
                                 "evalnext": [{"test": true, "then": "Browse1Search"}]
                             },
                             {
@@ -506,7 +496,7 @@
                                 "itemlabel": "Search Collection",
                                 "itemaction": "",
                                 "itemUI": "",
-                                "itemimage": "$ImageSearch",
+                                "itemimage": "$ImageLocation/search.jpg",
                                 "evalnext": [{"test": true, "then": "Browse1Search"}]
                             },
                             {
@@ -545,14 +535,14 @@
                     "Browse1Search": {
                         "label": "Search",
                         "commandset": [
-                            {"type": "static", "command": ".", "itemtype": "tile", "itemaction": "", "itemUI": "","itemimage": "$ImageSearch"},
+                            {"type": "static", "command": ".", "itemtype": "tile", "itemaction": "", "itemUI": "","itemimage": "$ImageLocation/search.jpg"},
                             {
                                 "type": "static",
                                 "command": "DYNAMIK let col = $Collection1; if (\"$Token1\".length>0) {col = col.filter((colI) => {return colI.title.toUpperCase().startsWith(\"$Token1\")})}; let srh = $Search; let res = []; let tuple; srh.forEach((seI) => {let filtok = \"$Token1\" + seI; let interRes = col.filter((colI) => {return colI.title.toUpperCase().startsWith(filtok)}); if (interRes.length>0) {tuple = {\"title\":\"\"}; tuple.token = filtok; tuple.title = filtok + \" - \" + interRes.length + \" items.\"; tuple.subtitle = interRes[0].title + \" - \" + interRes[interRes.length -1].title; res.push(tuple)}}); res;",
                                 "queryresult": "$.*",
                                 "itemname": "DYNAMIK JSON.parse(\"$Result\").title",
                                 "itemlabel": "DYNAMIK JSON.parse(\"$Result\").subtitle",
-                                "itemimage": "$ImageSearch",
+                                "itemimage": "$ImageLocation/search.jpg",
                                 "evalnext": [{"test": true, "then": "Browse1Filtered", "or": ""}],
                                 "evalwrite": [{"variable": "Token1", "value": "DYNAMIK JSON.parse(\"$Result\").token"}]
                             }
@@ -576,7 +566,7 @@
                                 "itemlabel": "Search Collection",
                                 "itemaction": "",
                                 "itemUI": "",
-                                "itemimage": "$ImageSearch",
+                                "itemimage": "$ImageLocation/search.jpg",
                                 "evalnext": [{"test": true, "then": "Browse2Search"}]
                             },
                             {
@@ -630,7 +620,7 @@
                                 "itemlabel": "Search Collection",
                                 "itemaction": "",
                                 "itemUI": "",
-                                "itemimage": "$ImageSearch",
+                                "itemimage": "$ImageLocation/search.jpg",
                                 "evalnext": [{"test": true, "then": "Browse2Search"}]
                             },
                             {
@@ -669,14 +659,14 @@
                     "Browse2Search": {
                         "label": "Search",
                         "commandset": [
-                            {"type": "static", "command": ".", "itemtype": "tile", "itemaction": "", "itemUI": "","itemimage": "$ImageSearch"},
+                            {"type": "static", "command": ".", "itemtype": "tile", "itemaction": "", "itemUI": "","itemimage": "$ImageLocation/search.jpg"},
                             {
                                 "type": "static",
                                 "command": "DYNAMIK let col = $Collection2; if (\"$Token0\".length>0) {col = col.filter((colI) => {return colI.title.toUpperCase().startsWith(\"$Token2\")})}; let srh = $Search; let res = []; let tuple; srh.forEach((seI) => {let filtok = \"$Token2\" + seI; let interRes = col.filter((colI) => {return colI.title.toUpperCase().startsWith(filtok)}); if (interRes.length>0) {tuple = {\"title\":\"\"}; tuple.token = filtok; tuple.title = filtok + \" - \" + interRes.length + \" items.\"; tuple.subtitle = interRes[0].title + \" - \" + interRes[interRes.length -1].title; res.push(tuple)}}); res;",
                                 "queryresult": "$.*",
                                 "itemname": "DYNAMIK JSON.parse(\"$Result\").title",
                                 "itemlabel": "DYNAMIK JSON.parse(\"$Result\").subtitle",
-                                "itemimage": "$ImageSearch",
+                                "itemimage": "$ImageLocation/search.jpg",
                                 "evalnext": [{"test": true, "then": "Browse2Filtered", "or": ""}],
                                 "evalwrite": [{"variable": "Token2", "value": "DYNAMIK JSON.parse(\"$Result\").token"}]
                             }
@@ -700,7 +690,7 @@
                                 "itemlabel": "Search Collection",
                                 "itemaction": "",
                                 "itemUI": "",
-                                "itemimage": "$ImageSearch",
+                                "itemimage": "$ImageLocation/search.jpg",
                                 "evalwrite": [{"variable": "Token", "value": ""}],
                                 "evalnext": [{"test": true, "then": "Browse3Search"}]
                             },
@@ -755,7 +745,7 @@
                                 "itemlabel": "Search Collection",
                                 "itemaction": "",
                                 "itemUI": "",
-                                "itemimage": "$ImageSearch",
+                                "itemimage": "$ImageLocation/search.jpg",
                                 "evalwrite": [{"variable": "Token", "value": ""}],
                                 "evalnext": [{"test": true, "then": "Browse3Search"}]
                             },
@@ -795,14 +785,14 @@
                     "Browse3Search": {
                         "label": "Search",
                         "commandset": [
-                            {"type": "static", "command": ".", "itemtype": "tile", "itemaction": "", "itemUI": "","itemimage": "$ImageSearch"},
+                            {"type": "static", "command": ".", "itemtype": "tile", "itemaction": "", "itemUI": "","itemimage": "$ImageLocation/search.jpg"},
                             {
                                 "type": "static",
                                 "command": "DYNAMIK let col = $Collection3; if (\"$Token3\".length>0) {col = col.filter((colI) => {return colI.title.toUpperCase().startsWith(\"$Token3\")})}; let srh = $Search; let res = []; let tuple; srh.forEach((seI) => {let filtok = \"$Token3\" + seI; let interRes = col.filter((colI) => {return colI.title.toUpperCase().startsWith(filtok)}); if (interRes.length>0) {tuple = {\"title\":\"\"}; tuple.token = filtok; tuple.title = filtok + \" - \" + interRes.length + \" items.\"; tuple.subtitle = interRes[0].title + \" - \" + interRes[interRes.length -1].title; res.push(tuple)}}); res;",
                                 "queryresult": "$.*",
                                 "itemname": "DYNAMIK JSON.parse(\"$Result\").title",
                                 "itemlabel": "DYNAMIK JSON.parse(\"$Result\").subtitle",
-                                "itemimage": "$ImageSearch",
+                                "itemimage": "$ImageLocation/search.jpg",
                                 "evalnext": [{"test": true, "then": "Browse3Filtered", "or": ""}],
                                 "evalwrite": [{"variable": "Token3", "value": "DYNAMIK JSON.parse(\"$Result\").token"}]
                             }
@@ -826,7 +816,7 @@
                                 "itemlabel": "Search Collection",
                                 "itemaction": "",
                                 "itemUI": "",
-                                "itemimage": "$ImageSearch",
+                                "itemimage": "$ImageLocation/search.jpg",
                                 "evalnext": [{"test": true, "then": "Browse4Search"}]
                             },
                             {
@@ -880,7 +870,7 @@
                                 "itemlabel": "Search Collection",
                                 "itemaction": "",
                                 "itemUI": "",
-                                "itemimage": "$ImageSearch",
+                                "itemimage": "$ImageLocation/search.jpg",
                                 "evalnext": [{"test": true, "then": "Browse4Search"}]
                             },
                             {
@@ -919,14 +909,14 @@
                     "Browse4Search": {
                         "label": "Search",
                         "commandset": [
-                            {"type": "static", "command": ".", "itemtype": "tile", "itemaction": "", "itemUI": "","itemimage": "$ImageSearch"},
+                            {"type": "static", "command": ".", "itemtype": "tile", "itemaction": "", "itemUI": "","itemimage": "$ImageLocation/search.jpg"},
                             {
                                 "type": "static",
                                 "command": "DYNAMIK let col = $Collection4; if (\"$Token4\".length>0) {col = col.filter((colI) => {return colI.title.toUpperCase().startsWith(\"$Token4\")})}; let srh = $Search; let res = []; let tuple; srh.forEach((seI) => {let filtok = \"$Token4\" + seI; let interRes = col.filter((colI) => {return colI.title.toUpperCase().startsWith(filtok)}); if (interRes.length>0) {tuple = {\"title\":\"\"}; tuple.token = filtok; tuple.title = filtok + \" - \" + interRes.length + \" items.\"; tuple.subtitle = interRes[0].title + \" - \" + interRes[interRes.length -1].title; res.push(tuple)}}); res;",
                                 "queryresult": "$.*",
                                 "itemname": "DYNAMIK JSON.parse(\"$Result\").title",
                                 "itemlabel": "DYNAMIK JSON.parse(\"$Result\").subtitle",
-                                "itemimage": "$ImageSearch",
+                                "itemimage": "$ImageLocation/search.jpg",
                                 "evalnext": [{"test": true, "then": "Browse4Filtered", "or": ""}],
                                 "evalwrite": [{"variable": "Token4", "value": "DYNAMIK JSON.parse(\"$Result\").token"}]
                             }
@@ -991,7 +981,7 @@
                                 "itemlabel": "Search Artist",
                                 "itemaction": "",
                                 "itemUI": "",
-                                "itemimage": "$ImageSearch",
+                                "itemimage": "$ImageLocation/search.jpg",
                                 "evalnext": [{"test": true, "then": "ArtistsSearch"}]
                             },
                             {
@@ -1025,7 +1015,7 @@
                                 "itemlabel": "Search Artist",
                                 "itemaction": "",
                                 "itemUI": "",
-                                "itemimage": "$ImageSearch",
+                                "itemimage": "$ImageLocation/search.jpg",
                                 "evalnext": [{"test": true, "then": "ArtistsSearch"}]
                             },
                             {
@@ -1051,14 +1041,14 @@
                     "ArtistsSearch": {
                         "label": "Search Artist",
                         "commandset": [
-                            {"type": "static", "command": ".", "itemtype": "tile", "itemaction": "", "itemUI": "","itemimage": "$ImageSearch"},
+                            {"type": "static", "command": ".", "itemtype": "tile", "itemaction": "", "itemUI": "","itemimage": "$ImageLocation/search.jpg"},
                             {
                                 "type": "static",
                                 "command": "DYNAMIK let col = $Collection0; if (\"$Token0\".length>0) {col = col.filter((colI) => {return colI.title.toUpperCase().startsWith(\"$Token0\")})}; let srh = $Search; let res = []; let tuple; srh.forEach((seI) => {let filtok = \"$Token0\" + seI; let interRes = col.filter((colI) => {return colI.title.toUpperCase().startsWith(filtok)}); if (interRes.length>0) {tuple = {\"title\":\"\"}; tuple.token = filtok; tuple.title = filtok + \" - \" + interRes.length + \" items.\"; tuple.subtitle = interRes[0].title + \" - \" + interRes[interRes.length -1].title; res.push(tuple)}}); res;",
                                 "queryresult": "$.*",
                                 "itemname": "DYNAMIK JSON.parse(\"$Result\").title",
                                 "itemlabel": "DYNAMIK JSON.parse(\"$Result\").subtitle",
-                                "itemimage": "$ImageSearch",
+                                "itemimage": "$ImageLocation/search.jpg",
                                 "evalnext": [{"test": true, "then": "ArtistsFiltered", "or": ""}],
                                 "evalwrite": [{"variable": "Token0", "value": "DYNAMIK JSON.parse(\"$Result\").token"}]
                             }
@@ -1105,7 +1095,7 @@
                                 "itemlabel": "Search Album",
                                 "itemaction": "",
                                 "itemUI": "",
-                                "itemimage": "$ImageSearch",
+                                "itemimage": "$ImageLocation/search.jpg",
                                 "evalnext": [{"test": true, "then": "AllAlbumsSearch"}]
                             },
                             {
@@ -1138,7 +1128,7 @@
                                 "itemlabel": "Search Album",
                                 "itemaction": "",
                                 "itemUI": "",
-                                "itemimage": "$ImageSearch",
+                                "itemimage": "$ImageLocation/search.jpg",
                                 "evalnext": [{"test": true, "then": "AllAlbumsSearch"}]
                             },
                             {
@@ -1163,14 +1153,14 @@
                     "AllAlbumsSearch": {
                         "label": "Search Album",
                         "commandset": [
-                            {"type": "static", "command": ".", "itemtype": "tile", "itemaction": "", "itemUI": "","itemimage": "$ImageSearch"},
+                            {"type": "static", "command": ".", "itemtype": "tile", "itemaction": "", "itemUI": "","itemimage": "$ImageLocation/search.jpg"},
                             {
                                 "type": "static",
                                 "command": "DYNAMIK let col = $Collection0; if (\"$Token0\".length>0) {col = col.filter((colI) => {return colI.title.toUpperCase().startsWith(\"$Token0\")})}; let srh = $Search; let res = []; let tuple; srh.forEach((seI) => {let filtok = \"$Token0\" + seI; let interRes = col.filter((colI) => {return colI.title.toUpperCase().startsWith(filtok)}); if (interRes.length>0) {tuple = {\"title\":\"\"}; tuple.token = filtok; tuple.title = filtok + \" - \" + interRes.length + \" items.\"; tuple.subtitle = interRes[0].title + \" - \" + interRes[interRes.length -1].title; res.push(tuple)}}); res;",
                                 "queryresult": "$.*",
                                 "itemname": "DYNAMIK JSON.parse(\"$Result\").title",
                                 "itemlabel": "DYNAMIK JSON.parse(\"$Result\").subtitle",
-                                "itemimage": "$ImageSearch",
+                                "itemimage": "$ImageLocation/search.jpg",
                                 "evalnext": [{"test": true, "then": "AllAlbumsFiltered", "or": ""}],
                                 "evalwrite": [{"variable": "Token0", "value": "DYNAMIK JSON.parse(\"$Result\").token"}]
                             }
@@ -1307,7 +1297,7 @@
                     "Browse": {
                         "label": "$MyBrowseName",
                         "commandset": [
-                            {"type": "static", "command": "{}", "itemUI": "close", "itemtype": "tile", "itemaction": "", "itemimage": "$MyAlbumArtURI"},
+                            {"type": "static", "command": "{}", "itemUI": "", "itemtype": "tile", "itemaction": "", "itemimage": "$MyAlbumArtURI"},
                             {
                                 "type": "http-get",
                                 "command": "$VolumioURI/api/v1/browse?uri=$MyURI",
@@ -1344,12 +1334,13 @@
                     "BrowseMenu": {
                         "label": "Menu",
                         "commandset": [
-                            {"type": "static", "command": "{}", "itemUI": "close", "itemtype": "tile", "itemaction": "", "itemimage": "$MyAlbumArtURI"},
+                            {"type": "static", "command": "{}", "itemUI": "", "itemtype": "tile", "itemaction": "", "itemimage": "$MyAlbumArtURI"},
                             {
                                 "type": "static",
                                 "command": "$BrowseCommand",
                                 "queryresult": "$.*",
-                                "itemUI": "goBack",
+                                "itemUI": "DYNAMIK (JSON.parse(\"$Result\").navigation == \"Cancel\") ? \"close\" : \"goBack\"",
+                                "itemaction": "DYNAMIK (JSON.parse(\"$Result\").navigation == \"Cancel\") ? \"Menu_Close\" : undefined",
                                 "itemname": "DYNAMIK JSON.parse(\"$Result\").name",
                                 "itemlabel": "DYNAMIK JSON.parse(\"$Result\").label",
                                 "itemimage": "DYNAMIK JSON.parse(\"$Result\").imageurl",
@@ -1381,8 +1372,7 @@
                                     {
                                         "variable": "CommandShortcuts",
                                         "value": "DYNAMIK \"$MyShortcuts\".replace(\"[\",\"\").replace(\"]\",\"\") + (![\"\",\"[]\"].includes(\"$MyShortcuts\") ? \",\" : \"\")"
-                                    },
-                                    {"variable": "Persist", "value": "DYNAMIK [\"AddShortcut\", \"RemoveShortcut\"].includes(JSON.parse(\"$Result\").navigation)"}
+                                    }
                                 ],
                                 "evalnext": [
                                     {
@@ -1395,10 +1385,12 @@
                                         "then": "Home",
                                         "or": ""
                                     }
-                                ]
+                                ],
+                                "evaldo": [{"test": "DYNAMIK [\"AddShortcut\", \"RemoveShortcut\"].includes(JSON.parse(\"$Result\").navigation)", "then": "__PERSIST", "or": ""}]
                             }
                         ]
-                    }
+                    },
+                    "Menu_Close": {"label": "", "commandset": []}
                 }
             },
             "Queue": {
@@ -1415,11 +1407,14 @@
                                 "itemname": "DYNAMIK JSON.parse(\"$Result\").name",
                                 "itemlabel": "DYNAMIK JSON.parse(\"$Result\").artist",
                                 "itemaction": "QUEUE_Play",
-                                "itemimage": "DYNAMIK (!JSON.parse(\"$Result\").albumart.startsWith(\"http\") ? (\"$VolumioURI\" + JSON.parse(\"$Result\").albumart) : JSON.parse(\"$Result\").albumart)"
+                                "itemimage": "DYNAMIK (!JSON.parse(\"$Result\").albumart.startsWith(\"http\") ? (\"$VolumioURI\" + JSON.parse(\"$Result\").albumart) : JSON.parse(\"$Result\").albumart)",
+                                "evalwrite": [
+                                    {"variable": "QueueIndex", "value": "DYNAMIK $ListIndex - 1"}
+                                ]
                             }
                         ]
                     },
-                    "QUEUE_Play": {"label": "", "commandset": [{"type": "socketIO", "command": "{\"call\": \"play\", \"message\": {\"value\": \"$ListIndex\"}}"}]},
+                    "QUEUE_Play": {"label": "", "commandset": [{"type": "socketIO", "command": "{\"call\": \"play\", \"message\": {\"value\": \"$QueueIndex\"}}"}]},
                     "QUEUE_Clear": {"label": "", "commandset": [{"type": "socketIO", "command": "{\"call\": \"clearQueue\", \"message\": \"\"}"}]}
                 }
             }
