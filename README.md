@@ -3,15 +3,16 @@ volumio config for meta
 
 https://www.youtube.com/watch?v=ybQrpgSK1yM&t=34s
 
-Support meta V0.8.15 onwards.
+Support meta V1.0.1 onwards.
 
 ## Setup
 ### Step 1 : Install in the meta
 #### Prerequisite
 In order to use this file, you need to have the metadriver installed. Please refere to this page for further instructions:
-https://github.com/jac459/metadriver
+https://github.com/jac459/meta
 #### Installation
-To install, downnoad the volumio.json file and move it to the "activated" folder.
+To install, use the metacore driver and select the Volumio driver from the library.
+Alternatively, downnoad the volumio.json file and move it to the "activate" folder.
 
 ### Step 2 : Install in the neeo app
 In the neeo app, add a device and search for Volumio.
@@ -30,7 +31,8 @@ when loading the recipe, you can suppress all the slides except the ones with sh
 ### Browsing
 Your browsing experience is with My Music list My Playing Queue list and play <=> queue switch.
 You will browse music using my music.
-when you click on a song or an album (at the top of the songs list), if your switch is on play. It will play immediately. If you put queue, it will be put in your ... queue.
+when you click on a song or an album (at the top of the songs list), if your switch is on play. It will play immediately.
+If you put queue, it will be put in your ... queue.
 You can see the song in your queue by using the my playing queue list.
 ### Playing
 You play using the play toggle (also attached to the ok button), skip track using next or previous and seek throught the progress slider.
