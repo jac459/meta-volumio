@@ -1,7 +1,7 @@
 {
     "name": "Volumio .meta",
     "manufacturer": "JAC459/mherwege/TonO",
-    "version": 50,
+    "version": 52,
     "type": "AUDIO",
     "discover": {
         "welcomeheadertext": "Choose your Volumio Instance",
