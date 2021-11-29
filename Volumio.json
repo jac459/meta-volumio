@@ -322,7 +322,7 @@
                                 "itemname": "Shortcut",
                                 "itemlabel": "DYNAMIK (\"$MyShortcuts\".includes(\"$Shortcut\") ? \"Remove Shortcut\" : \"Add Shortcut\")",
                                 "itemaction": "ACTION_Shortcut",
-                                "itemUI": "reload",
+                                "itemUI": "close",
                                 "itemimage": "DYNAMIK \"$MyShortcuts\".includes(\"$Shortcut\") ? \"$ImageLocation/remove.jpg\" : \"$ImageLocation/add.jpg\"",
                                 "evalwrite": [
                                     {
@@ -406,7 +406,7 @@
                                 "itemname": "Shortcut",
                                 "itemlabel": "DYNAMIK (\"$MyShortcuts\".includes(\"$Shortcut\") ? \"Remove Shortcut\" : \"Add Shortcut\")",
                                 "itemaction": "ACTION_Shortcut",
-                                "itemUI": "reload",
+                                "itemUI": "close",
                                 "itemimage": "DYNAMIK \"$MyShortcuts\".includes(\"$Shortcut\") ? \"$ImageLocation/remove.jpg\" : \"$ImageLocation/add.jpg\"",
                                 "evalwrite": [
                                     {
@@ -500,7 +500,7 @@
                                 "itemname": "Shortcut",
                                 "itemlabel": "DYNAMIK (\"$MyShortcuts\".includes(\"$Shortcut\") ? \"Remove Shortcut\" : \"Add Shortcut\")",
                                 "itemaction": "ACTION_Shortcut",
-                                "itemUI": "reload",
+                                "itemUI": "close",
                                 "itemimage": "DYNAMIK \"$MyShortcuts\".includes(\"$Shortcut\") ? \"$ImageLocation/remove.jpg\" : \"$ImageLocation/add.jpg\"",
                                 "evalwrite": [
                                     {
@@ -578,7 +578,7 @@
                                 "itemname": "Shortcut",
                                 "itemlabel": "DYNAMIK (\"$MyShortcuts\".includes(\"$Shortcut\") ? \"Remove Shortcut\" : \"Add Shortcut\")",
                                 "itemaction": "ACTION_Shortcut",
-                                "itemUI": "reload",
+                                "itemUI": "close",
                                 "itemimage": "DYNAMIK \"$MyShortcuts\".includes(\"$Shortcut\") ? \"$ImageLocation/remove.jpg\" : \"$ImageLocation/add.jpg\"",
                                 "evalwrite": [
                                     {
@@ -672,7 +672,7 @@
                                 "itemname": "Shortcut",
                                 "itemlabel": "DYNAMIK (\"$MyShortcuts\".includes(\"$Shortcut\") ? \"Remove Shortcut\" : \"Add Shortcut\")",
                                 "itemaction": "ACTION_Shortcut",
-                                "itemUI": "reload",
+                                "itemUI": "close",
                                 "itemimage": "DYNAMIK \"$MyShortcuts\".includes(\"$Shortcut\") ? \"$ImageLocation/remove.jpg\" : \"$ImageLocation/add.jpg\"",
                                 "evalwrite": [
                                     {
@@ -750,7 +750,7 @@
                                 "itemname": "Shortcut",
                                 "itemlabel": "DYNAMIK (\"$MyShortcuts\".includes(\"$Shortcut\") ? \"Remove Shortcut\" : \"Add Shortcut\")",
                                 "itemaction": "ACTION_Shortcut",
-                                "itemUI": "reload",
+                                "itemUI": "close",
                                 "itemimage": "DYNAMIK \"$MyShortcuts\".includes(\"$Shortcut\") ? \"$ImageLocation/remove.jpg\" : \"$ImageLocation/add.jpg\"",
                                 "evalwrite": [
                                     {
@@ -844,7 +844,7 @@
                                 "itemname": "Shortcut",
                                 "itemlabel": "DYNAMIK (\"$MyShortcuts\".includes(\"$Shortcut\") ? \"Remove Shortcut\" : \"Add Shortcut\")",
                                 "itemaction": "ACTION_Shortcut",
-                                "itemUI": "reload",
+                                "itemUI": "close",
                                 "itemimage": "DYNAMIK \"$MyShortcuts\".includes(\"$Shortcut\") ? \"$ImageLocation/remove.jpg\" : \"$ImageLocation/add.jpg\"",
                                 "evalwrite": [
                                     {
@@ -923,7 +923,7 @@
                                 "itemname": "Shortcut",
                                 "itemlabel": "DYNAMIK (\"$MyShortcuts\".includes(\"$Shortcut\") ? \"Remove Shortcut\" : \"Add Shortcut\")",
                                 "itemaction": "ACTION_Shortcut",
-                                "itemUI": "reload",
+                                "itemUI": "close",
                                 "itemimage": "DYNAMIK \"$MyShortcuts\".includes(\"$Shortcut\") ? \"$ImageLocation/remove.jpg\" : \"$ImageLocation/add.jpg\"",
                                 "evalwrite": [
                                     {
@@ -1018,7 +1018,7 @@
                                 "itemname": "Shortcut",
                                 "itemlabel": "DYNAMIK (\"$MyShortcuts\".includes(\"$Shortcut\") ? \"Remove Shortcut\" : \"Add Shortcut\")",
                                 "itemaction": "ACTION_Shortcut",
-                                "itemUI": "reload",
+                                "itemUI": "close",
                                 "itemimage": "DYNAMIK \"$MyShortcuts\".includes(\"$Shortcut\") ? \"$ImageLocation/remove.jpg\" : \"$ImageLocation/add.jpg\"",
                                 "evalwrite": [
                                     {
@@ -1096,7 +1096,7 @@
                                 "itemname": "Shortcut",
                                 "itemlabel": "DYNAMIK (\"$MyShortcuts\".includes(\"$Shortcut\") ? \"Remove Shortcut\" : \"Add Shortcut\")",
                                 "itemaction": "ACTION_Shortcut",
-                                "itemUI": "reload",
+                                "itemUI": "close",
                                 "itemimage": "DYNAMIK \"$MyShortcuts\".includes(\"$Shortcut\") ? \"$ImageLocation/remove.jpg\" : \"$ImageLocation/add.jpg\"",
                                 "evalwrite": [
                                     {
@@ -1190,7 +1190,7 @@
                                 "itemname": "Shortcut",
                                 "itemlabel": "DYNAMIK (\"$MyShortcuts\".includes(\"$Shortcut\") ? \"Remove Shortcut\" : \"Add Shortcut\")",
                                 "itemaction": "ACTION_Shortcut",
-                                "itemUI": "reload",
+                                "itemUI": "close",
                                 "itemimage": "DYNAMIK \"$MyShortcuts\".includes(\"$Shortcut\") ? \"$ImageLocation/remove.jpg\" : \"$ImageLocation/add.jpg\"",
                                 "evalwrite": [
                                     {
@@ -1389,7 +1389,7 @@
                                 "itemname": "Shortcut",
                                 "itemlabel": "DYNAMIK (\"$MyShortcuts\".includes(\"$Shortcut\") ? \"Remove Shortcut\" : \"Add Shortcut\")",
                                 "itemaction": "ACTION_Shortcut",
-                                "itemUI": "reload",
+                                "itemUI": "close",
                                 "itemimage": "DYNAMIK \"$MyShortcuts\".includes(\"$Shortcut\") ? \"$ImageLocation/remove.jpg\" : \"$ImageLocation/add.jpg\"",
                                 "evalwrite": [
                                     {
@@ -1417,9 +1417,10 @@
                                         "value": "DYNAMIK JSON.parse(\"$Result\").albumart ? ((!JSON.parse(\"$Result\").albumart.startsWith(\"http\") ? (\"$VolumioURI\" + JSON.parse(\"$Result\").albumart) : JSON.parse(\"$Result\").albumart)) : \"$MyAlbumArtArtistsURI\""
                                     },
                                     {"variable": "PlayPayLoad", "value": "$Result"},
+                                    {"variable": "MyBrowseName", "value": "DYNAMIK JSON.parse(\"$Result\").title"},
                                     {
                                         "variable": "Shortcut",
-                                        "value": "DYNAMIK JSON.stringify(Object.assign({},JSON.parse(\"{\\\"name\\\":\\\"JSON.parse(\"$Result\").title\\\",\\\"label\\\":\\\"\\\",\\\"imageurl\\\":\\\"$MyAlbumArtArtistsURI\\\",\\\"navigation\\\":\\\"Browse\\\"}\"),JSON.parse(\"$Result\"))).replace(/\\\"/g,'\\\\\"')"
+                                        "value": "DYNAMIK JSON.stringify(Object.assign({},JSON.parse(\"{\\\"name\\\":\\\"$MyBrowseName\\\",\\\"label\\\":\\\"\\\",\\\"imageurl\\\":\\\"$MyAlbumArtURI\\\",\\\"navigation\\\":\\\"Browse\\\"}\"),JSON.parse(\"$Result\"))).replace(/\\\"/g,'\\\\\"')"
                                     }
                                 ],
                                 "evalnext": [{"test": true, "then": "Songs", "or": ""}]
@@ -1454,9 +1455,10 @@
                                         "value": "DYNAMIK JSON.parse(\"$Result\").albumart ? ((!JSON.parse(\"$Result\").albumart.startsWith(\"http\") ? (\"$VolumioURI\" + JSON.parse(\"$Result\").albumart) : JSON.parse(\"$Result\").albumart)) : \"$MyAlbumArtCollectionURI\""
                                     },
                                     {"variable": "PlayPayLoad", "value": "$Result"},
+                                    {"variable": "MyBrowseName", "value": "DYNAMIK JSON.parse(\"$Result\").title"},
                                     {
                                         "variable": "Shortcut",
-                                        "value": "DYNAMIK JSON.stringify(Object.assign({},JSON.parse(\"{\\\"name\\\":\\\"JSON.parse(\"$Result\").title\\\",\\\"label\\\":\\\"\\\",\\\"imageurl\\\":\\\"$MyAlbumArtURI\\\",\\\"navigation\\\":\\\"Browse\\\"}\"),JSON.parse(\"$Result\"))).replace(/\\\"/g,'\\\\\"')"
+                                        "value": "DYNAMIK JSON.stringify(Object.assign({},JSON.parse(\"{\\\"name\\\":\\\"$MyBrowseName\\\",\\\"label\\\":\\\"\\\",\\\"imageurl\\\":\\\"$MyAlbumArtURI\\\",\\\"navigation\\\":\\\"Browse\\\"}\"),JSON.parse(\"$Result\"))).replace(/\\\"/g,'\\\\\"')"
                                     }
                                 ],
                                 "evalnext": [{"test": true, "then": "Songs", "or": ""}]
@@ -1491,9 +1493,10 @@
                                         "value": "DYNAMIK JSON.parse(\"$Result\").albumart ? ((!JSON.parse(\"$Result\").albumart.startsWith(\"http\") ? (\"$VolumioURI\" + JSON.parse(\"$Result\").albumart) : JSON.parse(\"$Result\").albumart)) : \"$MyAlbumArtCollectionURI\""
                                     },
                                     {"variable": "PlayPayLoad", "value": "$Result"},
+                                    {"variable": "MyBrowseName", "value": "DYNAMIK JSON.parse(\"$Result\").title"},
                                     {
                                         "variable": "Shortcut",
-                                        "value": "DYNAMIK JSON.stringify(Object.assign({},JSON.parse(\"{\\\"name\\\":\\\"JSON.parse(\"$Result\").title\\\",\\\"label\\\":\\\"\\\",\\\"imageurl\\\":\\\"$MyAlbumArtURI\\\",\\\"navigation\\\":\\\"Browse\\\"}\"),JSON.parse(\"$Result\"))).replace(/\\\"/g,'\\\\\"')"
+                                        "value": "DYNAMIK JSON.stringify(Object.assign({},JSON.parse(\"{\\\"name\\\":\\\"$MyBrowseName\\\",\\\"label\\\":\\\"\\\",\\\"imageurl\\\":\\\"$MyAlbumArtURI\\\",\\\"navigation\\\":\\\"Browse\\\"}\"),JSON.parse(\"$Result\"))).replace(/\\\"/g,'\\\\\"')"
                                     }
                                 ],
                                 "evalnext": [{"test": true, "then": "Songs", "or": ""}]
@@ -1534,9 +1537,10 @@
                                         "value": "DYNAMIK JSON.parse(\"$Result\").albumart ? ((!JSON.parse(\"$Result\").albumart.startsWith(\"http\") ? (\"$VolumioURI\" + JSON.parse(\"$Result\").albumart) : JSON.parse(\"$Result\").albumart)) : \"$MyAlbumArtCollectionURI\""
                                     },
                                     {"variable": "PlayPayLoad", "value": "$Result"},
+                                    {"variable": "MyBrowseName", "value": "DYNAMIK JSON.parse(\"$Result\").title"},
                                     {
                                         "variable": "Shortcut",
-                                        "value": "DYNAMIK JSON.stringify(Object.assign({},JSON.parse(\"{\\\"name\\\":\\\"JSON.parse(\"$Result\").title\\\",\\\"label\\\":\\\"\\\",\\\"imageurl\\\":\\\"$MyAlbumArtURI\\\",\\\"navigation\\\":\\\"Browse\\\"}\"),JSON.parse(\"$Result\"))).replace(/\\\"/g,'\\\\\"')"
+                                        "value": "DYNAMIK JSON.stringify(Object.assign({},JSON.parse(\"{\\\"name\\\":\\\"$MyBrowseName\\\",\\\"label\\\":\\\"\\\",\\\"imageurl\\\":\\\"$MyAlbumArtURI\\\",\\\"navigation\\\":\\\"Browse\\\"}\"),JSON.parse(\"$Result\"))).replace(/\\\"/g,'\\\\\"')"
                                     }
                                 ],
                                 "evalnext": [{"test": true, "then": "Songs", "or": ""}]
@@ -1561,9 +1565,10 @@
                                         "value": "DYNAMIK JSON.parse(\"$Result\").albumart ? ((!JSON.parse(\"$Result\").albumart.startsWith(\"http\") ? (\"$VolumioURI\" + JSON.parse(\"$Result\").albumart) : JSON.parse(\"$Result\").albumart)) : \"$MyAlbumArtCollectionURI\""
                                     },
                                     {"variable": "PlayPayLoad", "value": "$Result"},
+                                    {"variable": "MyBrowseName", "value": "DYNAMIK JSON.parse(\"$Result\").title"},
                                     {
                                         "variable": "Shortcut",
-                                        "value": "DYNAMIK JSON.stringify(Object.assign({},JSON.parse(\"{\\\"name\\\":\\\"JSON.parse(\"$Result\").title\\\",\\\"label\\\":\\\"\\\",\\\"imageurl\\\":\\\"$MyAlbumArtURI\\\",\\\"navigation\\\":\\\"Browse\\\"}\"),JSON.parse(\"$Result\"))).replace(/\\\"/g,'\\\\\"')"
+                                        "value": "DYNAMIK JSON.stringify(Object.assign({},JSON.parse(\"{\\\"name\\\":\\\"$MyBrowseName\\\",\\\"label\\\":\\\"\\\",\\\"imageurl\\\":\\\"$MyAlbumArtURI\\\",\\\"navigation\\\":\\\"Browse\\\"}\"),JSON.parse(\"$Result\"))).replace(/\\\"/g,'\\\\\"')"
                                     }
                                 ],
                                 "evalnext": [{"test": true, "then": "Songs", "or": ""}]
@@ -1587,7 +1592,7 @@
                                 "itemname": "Shortcut",
                                 "itemlabel": "DYNAMIK (\"$MyShortcuts\".includes(\"$Shortcut\") ? \"Remove Shortcut\" : \"Add Shortcut\")",
                                 "itemaction": "ACTION_Shortcut",
-                                "itemUI": "reload",
+                                "itemUI": "close",
                                 "itemimage": "DYNAMIK \"$MyShortcuts\".includes(\"$Shortcut\") ? \"$ImageLocation/remove.jpg\" : \"$ImageLocation/add.jpg\"",
                                 "evalwrite": [
                                     {
@@ -1632,7 +1637,7 @@
                             }
                         ]
                     },
-                    "ACTION_Shortcut": {"label": "", "commandset": []}
+                    "ACTION_Shortcut": {"label": "", "commandset": [{"type": "static", "command": "."}]}
                 }
             },
             "Shortcuts": {
