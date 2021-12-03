@@ -1,7 +1,7 @@
 {
     "name": "Volumio .meta",
     "manufacturer": "JAC459/mherwege/TonO",
-    "version": 52,
+    "version": 53,
     "type": "AUDIO",
     "discover": {
         "welcomeheadertext": "Choose your Volumio Instance",
@@ -39,7 +39,8 @@
                     {"variable": "Duration", "value": "DYNAMIK Number(JSON.parse(\"$Result\").duration)"},
                     {"variable": "Shuffle", "value": "DYNAMIK JSON.parse(\"$Result\").random"},
                     {"variable": "Repeat", "value": "DYNAMIK JSON.parse(\"$Result\").repeat"},
-                    {"variable": "DisplayShuffleRepeat", "value": "DYNAMIK (JSON.parse(\"$Result\").repeat ? \"REPEAT\" : \"\") + \" \" + (JSON.parse(\"$Result\").random ? \"SHUFFLE\" : \"\")"}
+                    {"variable": "NegShuffle", "value": "DYNAMIK !(JSON.parse(\"$Result\").random)"},
+                    {"variable": "NegRepeat", "value": "DYNAMIK !(JSON.parse(\"$Result\").repeat)"}
                 ]
             },
             "VolumioProgress": {"type": "static", "command": ".", "pooltime": "3000", "poolduration": "", "queryresult": "", "evaldo": [{"test": true, "then": "__REFRESHPROGRESS", "or": ""}]}
@@ -102,7 +103,8 @@
             "Duration": 0,
             "Repeat": false,
             "Shuffle": false,
-            "DisplayShuffleRepeat": "",
+            "NegRepeat": true,
+            "NegShuffle": true,
             "Collection0": "[]",
             "Collection1": "[]",
             "Collection2": "[]",
@@ -124,8 +126,7 @@
         },
         "labels": {
             "Title": {"label": "", "listen": "Title"},
-            "CurrentStatus": {"label": "", "listen": "Playing", "actionlisten": "DisplayVolume"},
-            "ShuffleRepeatStatus": {"label": "", "listen:": "DisplayShuffleRepeat"}
+            "CurrentStatus": {"label": "", "listen": "Playing", "actionlisten": "DisplayVolume"}
         },
         "switches": {
             "PlayMode": {"label": "Play <=> Queue", "listen": "PutInQueue", "evaldo": [{"test": "DYNAMIK $Result", "then": "__PUTINQUEUE", "or": "__DIRECTPLAY"}]}
@@ -171,12 +172,8 @@
             "PAUSE": {"label": "", "type": "static", "command": "", "evaldo": [{"test": "DYNAMIK $PlayFlag", "then": "PLAY TOGGLE", "or": ""}]},
             "PLAY": {"label": "", "type": "static", "command": "", "evaldo": [{"test": "DYNAMIK !$PlayFlag", "then": "PLAY TOGGLE", "or": ""}]},
             "PLAY TOGGLE": {"label": "", "type": "socketIO", "command": "{\"call\": \"toggle\", \"message\": \"\"}"},
-            "__REPEAT ON": {"label": "", "type": "socketIO", "command": "{\"call\": \"setRepeat\", \"message\": {\"value\": true}}"},
-            "__REPEAT OFF": {"label": "", "type": "socketIO", "command": "{\"call\": \"setRepeat\", \"message\": {\"value\": false}}"},
-            "REPEAT TOGGLE": {"label": "", "type": "static", "command": "", "evaldo": [{"test": "DYNAMIK !$Repeat", "then": "__REPEAT ON", "or": "__REPEAT OFF"}]},
-            "__SHUFFLE ON": {"label": "", "type": "socketIO", "command": "{\"call\": \"setRandom\", \"message\": {\"value\": true}}"},
-            "__SHUFFLE OFF": {"label": "", "type": "socketIO", "command": "{\"call\": \"setRandom\", \"message\": {\"value\": false}}"},
-            "SHUFFLE TOGGLE": {"label": "", "type": "static", "command": "", "evaldo": [{"test": "DYNAMIK !$Shuffle", "then": "__SHUFFLE ON", "or": "__SHUFFLE OFF"}]},
+            "REPEAT TOGGLE": {"label": "", "type": "socketIO", "command": "{\"call\": \"setRepeat\", \"message\": {\"value\": $NegRepeat}}"},
+            "SHUFFLE TOGGLE": {"label": "", "type": "socketIO", "command": "{\"call\": \"setRandom\", \"message\": {\"value\": $NegShuttle}}"},
             "__MUTE ON": {"label": "", "type": "socketIO", "command": "{\"call\": \"mute\", \"message\": \"\"}"},
             "__MUTE OFF": {"label": "", "type": "socketIO", "command": "{\"call\": \"unmute\", \"message\": \"\"}"},
             "MUTE TOGGLE": {"label": "", "type": "static", "command": "", "evaldo": [{"test": "DYNAMIK !$Mute", "then": "__MUTE ON", "or": "__MUTE OFF"}]},
@@ -268,6 +265,7 @@
                     "Collections": {
                         "label": "Collections list",
                         "commandset": [
+                            {"type": "static", "command": ".", "itemUI": "", "itemtype": "tile", "itemaction": "", "itemimage": "$ImageLocation/Volumio.jpg"},
                             {
                                 "type": "static",
                                 "command": "[$CommandShortcuts$CommandCollection]",
@@ -1646,6 +1644,7 @@
                     "Home": {
                         "label": "Home",
                         "commandset": [
+                            {"type": "static", "command": ".", "itemUI": "", "itemtype": "tile", "itemaction": "", "itemimage": "$ImageLocation/Volumio.jpg"},
                             {
                                 "type": "http-get",
                                 "command": "$VolumioURI/api/v1/browse?uri=/",
@@ -1783,7 +1782,10 @@
                     "Queue": {
                         "label": "Queue",
                         "commandset": [
-                            {"type": "static", "command": ".", "itemtype": "tile", "itemUI": "reload", "itemaction": "QUEUE_Clear", "itemimage": "$ImageLocation/clear.jpg"},
+                            {"type": "static", "command": ".", "itemUI": "", "itemtype": "tile", "itemaction": "", "itemimage": "$ImageLocation/Volumio.jpg"},
+                            {"type": "static", "command": ".", "itemtype":"button", "itemname": "SHUFFLE", "itemlabel": "", "itemimage": "Shuffle", "itemUI": "DYNAMIK $Shuffle", "itemaction": "QUEUE_Shuffle"},                            
+                            {"type": "static", "command": ".", "itemtype":"button", "itemname": "REPEAT", "itemlabel": "", "itemimage": "Repeat", "itemUI": "DYNAMIK $Repeat", "itemaction": "QUEUE_Repeat"},                            
+                            {"type": "static", "command": ".", "itemtype":"button", "itemname": "CLEAR QUEUE", "itemlabel": "", "itemUI": false, "itemaction": "QUEUE_Clear"},                            
                             {
                                 "type": "http-get",
                                 "command": "$VolumioURI/api/v1/getQueue",
@@ -1793,13 +1795,15 @@
                                 "itemaction": "QUEUE_Play",
                                 "itemimage": "DYNAMIK (!JSON.parse(\"$Result\").albumart.startsWith(\"http\") ? (\"$VolumioURI\" + JSON.parse(\"$Result\").albumart) : JSON.parse(\"$Result\").albumart)",
                                 "evalwrite": [
-                                    {"variable": "QueueIndex", "value": "DYNAMIK $ListIndex - 1"}
+                                    {"variable": "QueueIndex", "value": "DYNAMIK $ListIndex - 4"}
                                 ]
                             }
                         ]
                     },
                     "QUEUE_Play": {"label": "", "commandset": [{"type": "socketIO", "command": "{\"call\": \"play\", \"message\": {\"value\": \"$QueueIndex\"}}"}]},
-                    "QUEUE_Clear": {"label": "", "commandset": [{"type": "socketIO", "command": "{\"call\": \"clearQueue\", \"message\": \"\"}"}]}
+                    "QUEUE_Clear": {"label": "", "commandset": [{"type": "socketIO", "command": "{\"call\": \"clearQueue\", \"message\": \"\"}"}]},
+                    "QUEUE_Shuffle": {"label": "", "commandset": [{"type": "socketIO", "command": "{\"call\": \"setRandom\", \"message\": {\"value\": $NegShuffle}}"}]},
+                    "QUEUE_Repeat": {"label": "", "commandset": [{"type": "socketIO", "command": "{\"call\": \"setRepeat\", \"message\": {\"value\": $NegRepeat}}"}]}
                 }
             }
         }
