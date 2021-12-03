@@ -1782,10 +1782,7 @@
                     "Queue": {
                         "label": "Queue",
                         "commandset": [
-                            {"type": "static", "command": ".", "itemUI": "", "itemtype": "tile", "itemaction": "", "itemimage": "$ImageLocation/Volumio.jpg"},
-                            {"type": "static", "command": ".", "itemtype":"button", "itemname": "SHUFFLE", "itemlabel": "", "itemimage": "Shuffle", "itemUI": "DYNAMIK $Shuffle", "itemaction": "QUEUE_Shuffle"},                            
-                            {"type": "static", "command": ".", "itemtype":"button", "itemname": "REPEAT", "itemlabel": "", "itemimage": "Repeat", "itemUI": "DYNAMIK $Repeat", "itemaction": "QUEUE_Repeat"},                            
-                            {"type": "static", "command": ".", "itemtype":"button", "itemname": "CLEAR QUEUE", "itemlabel": "", "itemUI": false, "itemaction": "QUEUE_Clear"},                            
+                            {"type": "static", "command": ".", "itemtype": "tile", "itemUI": "reload", "itemaction": "QUEUE_Clear", "itemimage": "$ImageLocation/clear.jpg"},
                             {
                                 "type": "http-get",
                                 "command": "$VolumioURI/api/v1/getQueue",
@@ -1795,15 +1792,13 @@
                                 "itemaction": "QUEUE_Play",
                                 "itemimage": "DYNAMIK (!JSON.parse(\"$Result\").albumart.startsWith(\"http\") ? (\"$VolumioURI\" + JSON.parse(\"$Result\").albumart) : JSON.parse(\"$Result\").albumart)",
                                 "evalwrite": [
-                                    {"variable": "QueueIndex", "value": "DYNAMIK $ListIndex - 4"}
+                                    {"variable": "QueueIndex", "value": "DYNAMIK $ListIndex - 1"}
                                 ]
                             }
                         ]
                     },
                     "QUEUE_Play": {"label": "", "commandset": [{"type": "socketIO", "command": "{\"call\": \"play\", \"message\": {\"value\": \"$QueueIndex\"}}"}]},
-                    "QUEUE_Clear": {"label": "", "commandset": [{"type": "socketIO", "command": "{\"call\": \"clearQueue\", \"message\": \"\"}"}]},
-                    "QUEUE_Shuffle": {"label": "", "commandset": [{"type": "socketIO", "command": "{\"call\": \"setRandom\", \"message\": {\"value\": $NegShuffle}}"}]},
-                    "QUEUE_Repeat": {"label": "", "commandset": [{"type": "socketIO", "command": "{\"call\": \"setRepeat\", \"message\": {\"value\": $NegRepeat}}"}]}
+                    "QUEUE_Clear": {"label": "", "commandset": [{"type": "socketIO", "command": "{\"call\": \"clearQueue\", \"message\": \"\"}"}]}
                 }
             }
         }
