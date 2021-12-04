@@ -127,7 +127,10 @@
         "switches": {
             "PlayMode": {"label": "Play <=> Queue", "listen": "PutInQueue", "evaldo": [{"test": "DYNAMIK $Result", "then": "__PUTINQUEUE", "or": "__DIRECTPLAY"}]}
         },
- 
+        "sliders": {
+            "VOLUME": {"label": "", "unit": "db", "listen": "VolumePlayed", "evaldo": [{"test": true, "then": "__VOLUMESET", "or": ""}]},
+            "PROGRESS": {"label": "", "unit": "%", "listen": "Progress", "evaldo": [{"test": true, "then": "__PROGRESSSET", "or": ""}]}
+        },
         "buttons": {
             "__DIRECTPLAY": {"label": "", "type": "static", "command": "", "evalwrite": [{"variable": "MyPlayMode", "value": "ACTION_Play"}, {"variable": "PutInQueue", "value": false}]},
             "__PUTINQUEUE": {"label": "", "type": "static", "command": "", "evalwrite": [{"variable": "MyPlayMode", "value": "ACTION_Queue"}, {"variable": "PutInQueue", "value": true}]},
