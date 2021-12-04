@@ -1,6 +1,8 @@
 # meta-volumio
 volumio config for meta
 
+Driver initiated by JAC459 and vastly enhanced by MHerwege.
+
 https://www.youtube.com/watch?v=ybQrpgSK1yM&t=34s
 https://www.youtube.com/watch?v=loi-8xsP1_8
 
