@@ -4,7 +4,7 @@ volumio config for meta
 https://www.youtube.com/watch?v=ybQrpgSK1yM&t=34s
 https://www.youtube.com/watch?v=loi-8xsP1_8
 
-Support meta V0.8.15 onwards.
+Support meta V1.0.1 onwards.
 
 ## Setup
 ### Step 1 : Install in the meta
@@ -31,8 +31,10 @@ when loading the recipe, you can suppress all the slides except the ones with sh
 ### Browsing
 Your browsing experience is with My Music list My Playing Queue list and play <=> queue switch.
 You will browse music using my music.
-when you click on a song or an album (at the top of the songs list), if your switch is on play. It will play immediately. If you put queue, it will be put in your ... queue.
+when you click on a song or an album (at the top of the songs list), if your switch is on play. It will play immediately.
+If you put queue, it will be put in your ... queue.
 You can see the song in your queue by using the my playing queue list.
+In many places when browsing through the collection, a search function is provided, allowing you to do a character search in the list.
 ### Playing
 You play using the play toggle (also attached to the ok button), skip track using next or previous and seek throught the progress slider.
 You see what you are doing using the status label.
@@ -40,12 +42,10 @@ You see what you are doing using the status label.
 Radio stations listed in the My Music list are taken from the favorite radio stations in the volumio software.
 To have radio stations available, you need to create favorites in volumio first.
 ### Shortcuts
-You can create entries in the directory beyond the standard provided entries.
-This makes it possible to provide access to music not provided through the default My Music list.
-To do this, use the Manage Shortcuts button.
-You will be able to browse the full directory and add any entry in the directory as a shortcut to the My Music list.
+You can create entries in the top level directory beyond the standard provided entries.
+Go to the place in the directory you want, and use the add shortcut from the top of the list.
 Shortcuts will be added to the top of the My Music list.
-Using the same Manage Shortcuts button, you can also remove existing shortcuts.
+In the same way, you can remove a shortcut.
 A Clear Shortcuts button removes all shortcuts from the My Music list.
 
 ## Note on people willing to control Chromecast through Volumio
