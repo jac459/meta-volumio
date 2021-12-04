@@ -53,7 +53,7 @@
             "PlayFlag": false,
             "Title": "",
             "Playing": "",
-            "ImageLocation": "https://raw.githubusercontent.com/mherwege/meta-volumio/shortcuts/pics",
+            "ImageLocation": "https://raw.githubusercontent.com/jac459/meta-volumio/main/pics",
             "CommandShortcuts": "",
             "CommandCollection": "{\"name\":\"Radio\",\"label\":\"Radio Stations\",\"imageurl\":\"$ImageLocation/radio.jpg\",\"navigation\":\"Radio\",\"uri\":\"radio/favourites\"},{\"name\":\"Artists\",\"label\":\"Artists List\",\"imageurl\":\"$ImageLocation/guitar.jpg\",\"navigation\":\"Artists\",\"uri\":\"artists://\"},{\"name\":\"Albums\",\"label\":\"Albums List\",\"imageurl\":\"$ImageLocation/record.jpg\",\"navigation\":\"AllAlbums\",\"uri\":\"albums://\"},{\"name\":\"Playlist\",\"label\":\"Playlists\",\"imageurl\":\"$ImageLocation/fav.jpg\",\"navigation\":\"Playlist\",\"uri\":\"playlists\"},{\"name\":\"Spotify\",\"label\":\"Spotify Connect\",\"imageurl\":\"$ImageLocation/spotify.jpg\",\"navigation\":\"Spotify\",\"uri\":\"spotify/playlists\"},{\"name\":\"Library\",\"label\":\"Full Library\",\"imageurl\":\"$ImageLocation/library.jpg\",\"navigation\":\"Library\",\"uri\":\"/\"}",
             "BrowseCommand": "",
