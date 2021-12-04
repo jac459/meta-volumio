@@ -47,7 +47,7 @@
         },
         "variables": {
             "VolumioURI": "http://DYNAMIK_INST_START DYNAMIK JSON.parse(\"$Result\").ip DYNAMIK_INST_END",
-            "FOLDER_TYPES": "[\"folder\", \"playlist\"]",
+            "FOLDER_TYPES": "[\"folder\", \"playlist\", undefined]",
             "PLAY_TYPES": "[\"track\", \"song\", \"folder\", \"webradio\", \"mywebradio\", \"playlist\"]",
             "PlayerStatus": "",
             "PlayFlag": false,
@@ -178,16 +178,17 @@
             "__MUTE OFF": {"label": "", "type": "socketIO", "command": "{\"call\": \"unmute\", \"message\": \"\"}"},
             "MUTE TOGGLE": {"label": "", "type": "static", "command": "", "evaldo": [{"test": "DYNAMIK !$Mute", "then": "__MUTE ON", "or": "__MUTE OFF"}]},
             "POWER ON": {
-                "label": "",
-                "type": "static",
-                "command": "",
+                "label": "", "type": "static", "command": "",
                 "evaldo": [{"test": true, "then": "__INITIALISE", "or": ""}, {"test": true, "then": "__GETSTATE", "or": ""}],
                 "evalwrite": [
                     {"variable": "MyShortcuts", "value": "DYNAMIK [\"undefined\", \"\"].includes(\"$MyShortcuts\") ? \"[]\" : \"$MyShortcuts\".replace(/\"/g,'\\\\\"')"},
                     {"variable": "CommandShortcuts", "value": "DYNAMIK \"$MyShortcuts\".replace(\"[\",\"\").replace(\"]\",\"\") + (![\"\",\"[]\"].includes(\"$MyShortcuts\") ? \",\" : \"\")"}
                 ]
             },
-            "POWER OFF": {"label": "", "type": "static", "command": "", "evaldo": [{"test": true, "then": "__CLEANUP", "or": ""}]},
+            "POWER OFF": {
+                "label": "", "type": "static", "command": "",
+                "evaldo": [{"test": true, "then": "__PERSIST", "or": ""}, {"test": true, "then": "__CLEANUP", "or": ""}]
+            },
             "CURSOR LEFT": {"label": "", "type": "static", "command": "", "evaldo": [{"test": true, "then": "PREVIOUS", "or": ""}]},
             "CURSOR RIGHT": {"label": "", "type": "static", "command": "", "evaldo": [{"test": true, "then": "NEXT", "or": ""}]},
             "CURSOR ENTER": {"label": "", "type": "static", "command": "", "evaldo": [{"test": true, "then": "PLAY TOGGLE", "or": ""}]},
