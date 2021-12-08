@@ -1204,7 +1204,6 @@
                                 "command": "$VolumioURI/api/v1/browse?uri=$MyBrowse0URI",
                                 "queryresult": "$.navigation.lists[0].items[*]",
                                 "itemname": "DYNAMIK JSON.parse(\"$Result\").title",
-                                "itemlabel": "DYNAMIK JSON.parse(\"$Result\").album",
                                 "itemimage": "DYNAMIK JSON.parse(\"$Result\").albumart ? ((!JSON.parse(\"$Result\").albumart.startsWith(\"http\") ? (\"$VolumioURI\" + JSON.parse(\"$Result\").albumart) : JSON.parse(\"$Result\").albumart)) : \"$MyAlbumArtCollectionURI\"",
                                 "evalwrite": [
                                     {"variable": "MyURI", "value": "DYNAMIK JSON.parse(\"$Result\").uri"},
@@ -1306,8 +1305,7 @@
                                 "type": "http-get",
                                 "command": "$VolumioURI/api/v1/browse?uri=playlists",
                                 "queryresult": "$.navigation.lists[0].items[*]",
-                                "itemname": "DYNAMIK JSON.parse(\"$Result\").name",
-                                "itemlabel": "DYNAMIK JSON.parse(\"$Result\").album",
+                                "itemname": "DYNAMIK JSON.parse(\"$Result\").title",
                                 "itemaction": "QUEUE_SaveToPlaylist",
                                 "itemUI": "close",
                                 "itemimage": "$ImageLocation/fav.jpg",
