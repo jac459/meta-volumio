@@ -280,50 +280,6 @@
                             }
                         ]
                     },
-                    "CollectionMenu": {
-                        "label": "Collections List",
-                        "commandset": [
-                            {"type": "static", "command": ".", "itemtype": "tile", "itemimage": "$MyAlbumArtURI"},
-                            {"type": "static", "command": ".", "itemname": "Play", "itemlabel": "Play Selection", "itemimage": "$ImageLocation/play.jpg", "itemaction": "ACTION_Play", "itemUI": "close"},
-                            {
-                                "type": "static",
-                                "command": ".",
-                                "itemname": "Add",
-                                "itemlabel": "Add Selection to Queue",
-                                "itemimage": "$ImageLocation/queue.jpg",
-                                "itemaction": "ACTION_Queue",
-                                "itemUI": "goBack"
-                            },
-                            {
-                                "type": "static",
-                                "command": ".",
-                                "itemname": "Shortcut",
-                                "itemlabel": "DYNAMIK (\"$MyShortcuts\".includes(\"$Shortcut\") ? \"Remove Shortcut to Selection\" : \"Add Shortcut to Selection\")",
-                                "itemimage": "DYNAMIK \"$MyShortcuts\".includes(\"$Shortcut\") ? \"$ImageLocation/remove.jpg\" : \"$ImageLocation/add.jpg\"",
-                                "itemaction": "ACTION_Shortcut",
-                                "itemUI": "close",
-                                "evalwrite": [
-                                    {
-                                        "variable": "MyShortcuts",
-                                        "value": "DYNAMIK if (\"$MyShortcuts\".includes(\"$Shortcut\")) { let s=JSON.parse(\"$MyShortcuts\"); let t=JSON.parse(\"$Shortcut\"); let p=s.findIndex((u) => {return (u.name==t.name) && (u.label==t.label) && (u.uri==t.uri) }); if(p >= 0) {s.splice(p,1)}; JSON.stringify(s).replace(/\\\"/g,'\\\\\"') } else { JSON.stringify(JSON.parse(\"[$Shortcut]\").concat(JSON.parse(\"$MyShortcuts\"))).replace(/\\\"/g,'\\\\\"') }"
-                                    },
-                                    {
-                                        "variable": "CommandShortcuts",
-                                        "value": "DYNAMIK \"$MyShortcuts\".replace(\"[\",\"\").replace(\"]\",\"\") + (![\"\",\"[]\"].includes(\"$MyShortcuts\") ? \",\" : \"\")"
-                                    }
-                                ]
-                            },
-                            {
-                                "type": "static",
-                                "command": ".",
-                                "itemname": "DYNAMIK $PlaylistFlag ? \"Delete\" : \"\"",
-                                "itemlabel": "DYNAMIK $PlaylistFlag ? \"Delete Playlist\" : \"\"",
-                                "itemimage": "DYNAMIK $PlaylistFlag ? \"$ImageLocation/delete.jpg\" : \"\"",
-                                "itemaction": "DYNAMIK $PlaylistFlag ? \"ACTION_PlaylistDelete\" : \"\"",
-                                "itemUI": "DYNAMIK $PlaylistFlag ? \"close\" :\"\""
-                            }
-                        ]
-                    },
                     "Browse0": {
                         "label": "$MyBrowse0Name",
                         "commandset": [
@@ -1228,7 +1184,14 @@
                         "label": "Songs List",
                         "commandset": [
                             {"type": "static", "command": ".", "itemtype": "tile", "itemimage": "$MyAlbumArtURI"},
-                            {"type": "static", "command": ".",  "itemname": "$MyBrowseName", "itemlabel": "Open Menu", "itemimage": "$ImageLocation/menu.jpg", "evalnext": [{"test": true, "then": "CollectionMenu"}]},
+                            {
+                                "type": "static",
+                                "command": ".",
+                                "itemname": "$MyBrowseName",
+                                "itemlabel": "Open Menu", "itemimage":
+                                "$ImageLocation/menu.jpg",
+                                "evalnext": [{"test": "DYNAMIK $PlaylistFlag", "then": "PlaylistMenu", "or": "CollectionMenu"}]
+                            },
                             {
                                 "type": "http-get",
                                 "command": "$VolumioURI/api/v1/browse?uri=$MyURI",
@@ -1239,6 +1202,77 @@
                                 "itemimage": "DYNAMIK JSON.parse(\"$Result\").albumart ? ((!JSON.parse(\"$Result\").albumart.startsWith(\"http\") ? (\"$VolumioURI\" + JSON.parse(\"$Result\").albumart) : JSON.parse(\"$Result\").albumart)) : \"$MyAlbumArtURI\"",
                                 "evalnext": [{"test": true, "then": "CollectionMenu"}]
                             }
+                        ]
+                    },
+                    "CollectionMenu": {
+                        "label": "Collections List",
+                        "commandset": [
+                            {"type": "static", "command": ".", "itemtype": "tile", "itemimage": "$MyAlbumArtURI"},
+                            {"type": "static", "command": ".", "itemname": "Play", "itemlabel": "Play Selection", "itemimage": "$ImageLocation/play.jpg", "itemaction": "ACTION_Play", "itemUI": "close"},
+                            {
+                                "type": "static",
+                                "command": ".",
+                                "itemname": "Add",
+                                "itemlabel": "Add Selection to Queue",
+                                "itemimage": "$ImageLocation/queue.jpg",
+                                "itemaction": "ACTION_Queue",
+                                "itemUI": "goBack"
+                            },
+                            {
+                                "type": "static",
+                                "command": ".",
+                                "itemname": "Shortcut",
+                                "itemlabel": "DYNAMIK (\"$MyShortcuts\".includes(\"$Shortcut\") ? \"Remove Shortcut to Selection\" : \"Add Shortcut to Selection\")",
+                                "itemimage": "DYNAMIK \"$MyShortcuts\".includes(\"$Shortcut\") ? \"$ImageLocation/remove.jpg\" : \"$ImageLocation/add.jpg\"",
+                                "itemaction": "ACTION_Shortcut",
+                                "itemUI": "close",
+                                "evalwrite": [
+                                    {
+                                        "variable": "MyShortcuts",
+                                        "value": "DYNAMIK if (\"$MyShortcuts\".includes(\"$Shortcut\")) { let s=JSON.parse(\"$MyShortcuts\"); let t=JSON.parse(\"$Shortcut\"); let p=s.findIndex((u) => {return (u.name==t.name) && (u.label==t.label) && (u.uri==t.uri) }); if(p >= 0) {s.splice(p,1)}; JSON.stringify(s).replace(/\\\"/g,'\\\\\"') } else { JSON.stringify(JSON.parse(\"[$Shortcut]\").concat(JSON.parse(\"$MyShortcuts\"))).replace(/\\\"/g,'\\\\\"') }"
+                                    },
+                                    {
+                                        "variable": "CommandShortcuts",
+                                        "value": "DYNAMIK \"$MyShortcuts\".replace(\"[\",\"\").replace(\"]\",\"\") + (![\"\",\"[]\"].includes(\"$MyShortcuts\") ? \",\" : \"\")"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "PlaylistMenu": {
+                        "label": "Collections List",
+                        "commandset": [
+                            {"type": "static", "command": ".", "itemtype": "tile", "itemimage": "$MyAlbumArtURI"},
+                            {"type": "static", "command": ".", "itemname": "Play", "itemlabel": "Play Selection", "itemimage": "$ImageLocation/play.jpg", "itemaction": "ACTION_Play", "itemUI": "close"},
+                            {
+                                "type": "static",
+                                "command": ".",
+                                "itemname": "Add",
+                                "itemlabel": "Add Selection to Queue",
+                                "itemimage": "$ImageLocation/queue.jpg",
+                                "itemaction": "ACTION_Queue",
+                                "itemUI": "goBack"
+                            },
+                            {
+                                "type": "static",
+                                "command": ".",
+                                "itemname": "Shortcut",
+                                "itemlabel": "DYNAMIK (\"$MyShortcuts\".includes(\"$Shortcut\") ? \"Remove Shortcut to Selection\" : \"Add Shortcut to Selection\")",
+                                "itemimage": "DYNAMIK \"$MyShortcuts\".includes(\"$Shortcut\") ? \"$ImageLocation/remove.jpg\" : \"$ImageLocation/add.jpg\"",
+                                "itemaction": "ACTION_Shortcut",
+                                "itemUI": "close",
+                                "evalwrite": [
+                                    {
+                                        "variable": "MyShortcuts",
+                                        "value": "DYNAMIK if (\"$MyShortcuts\".includes(\"$Shortcut\")) { let s=JSON.parse(\"$MyShortcuts\"); let t=JSON.parse(\"$Shortcut\"); let p=s.findIndex((u) => {return (u.name==t.name) && (u.label==t.label) && (u.uri==t.uri) }); if(p >= 0) {s.splice(p,1)}; JSON.stringify(s).replace(/\\\"/g,'\\\\\"') } else { JSON.stringify(JSON.parse(\"[$Shortcut]\").concat(JSON.parse(\"$MyShortcuts\"))).replace(/\\\"/g,'\\\\\"') }"
+                                    },
+                                    {
+                                        "variable": "CommandShortcuts",
+                                        "value": "DYNAMIK \"$MyShortcuts\".replace(\"[\",\"\").replace(\"]\",\"\") + (![\"\",\"[]\"].includes(\"$MyShortcuts\") ? \",\" : \"\")"
+                                    }
+                                ]
+                            },
+                            {"type": "static", "command": ".", "itemname": "Delete", "itemlabel": "Delete Playlist", "itemimage": "$ImageLocation/delete.jpg", "itemaction": "ACTION_PlaylistDelete", "itemUI": "close"}
                         ]
                     },
                     "ACTION_Play": {"label": "", "commandset": [{"type": "socketIO", "command": "DYNAMIK let pkt = {\"call\":\"replaceAndPlay\", \"message\":\"\"}; pkt.message = $PlayPayLoad; pkt;"}]},
@@ -1338,6 +1372,7 @@
                                 "command": "DYNAMIK let srh = ($Shift ? $UpperCase : $LowerCase); let res = []; let tuple; srh.forEach((seI) => {let name = \"$PlaylistName\" + seI; tuple = {\"name\":\"\"}; tuple.name = name; tuple.char = seI; res.push(tuple)}); res;",
                                 "queryresult": "$.*",
                                 "itemname": "DYNAMIK JSON.parse(\"$Result\").char",
+                                "itemimage": "$ImageLocation/dot.jpg",
                                 "evalwrite": [
                                     {"variable": "PlaylistName", "value": "DYNAMIK JSON.parse(\"$Result\").name"},
                                     {"variable": "Shift", "value": false}
