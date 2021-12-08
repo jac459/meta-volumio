@@ -113,7 +113,10 @@
             "Token3": "",
             "Token4": "",
             "Token5": "",
-            "Charset": "[\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\", \"I\", \"J\", \"K\", \"L\", \"M\", \"N\", \"O\", \"P\", \"Q\", \"R\", \"S\", \"T\", \"U\", \"V\", \"W\", \"X\", \"Y\", \"Z\", \"0\", \"1\", \"2\", \"3\", \"4\", \"5\", \"6\", \"7\", \"8\", \"9\", \".\", \"?\", \",\", \"!\", \"@\", \"#\", \"$\", \"%\", \"^\", \"&\", \"*\", \"(\", \")\", \"-\", \"+\", \"=\", \"{\", \"}\", \"[\", \"]\"]",
+            "Search": "[\" \", \".\", \"?\", \",\", \"!\", \"@\", \"#\", \"$\", \"%\", \"^\", \"&\", \"*\", \"(\", \")\", \"-\", \"+\", \"=\", \"{\", \"}\", \"[\", \"]\", \"0\", \"1\", \"2\", \"3\", \"4\", \"5\", \"6\", \"7\", \"8\", \"9\", \"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\", \"I\", \"J\", \"K\", \"L\", \"M\", \"N\", \"O\", \"P\", \"Q\", \"R\", \"S\", \"T\", \"U\", \"V\", \"W\", \"X\", \"Y\", \"Z\"]",
+            "UpperCase": "[\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\", \"I\", \"J\", \"K\", \"L\", \"M\", \"N\", \"O\", \"P\", \"Q\", \"R\", \"S\", \"T\", \"U\", \"V\", \"W\", \"X\", \"Y\", \"Z\", \"0\", \"1\", \"2\", \"3\", \"4\", \"5\", \"6\", \"7\", \"8\", \"9\", \" \", \"-\"]",
+            "LowerCase": "[\"a\", \"b\", \"c\", \"d\", \"e\", \"f\", \"g\", \"h\", \"i\", \"j\", \"k\", \"l\", \"m\", \"n\", \"o\", \"p\", \"q\", \"r\", \"s\", \"t\", \"u\", \"v\", \"w\", \"x\", \"y\", \"z\", \"0\", \"1\", \"2\", \"3\", \"4\", \"5\", \"6\", \"7\", \"8\", \"9\", \" \", \"-\"]",
+            "Shift": true,
             "PlaylistName": ""
         },
         "persistedvariables": {"MyShortcuts": ""},
@@ -429,7 +432,7 @@
                             {"type": "static", "command": ".", "itemtype": "tile", "itemimage": "$ImageLocation/search.jpg"},
                             {
                                 "type": "static",
-                                "command": "DYNAMIK let col = $Collection0; if (\"$Token0\".length>0) {col = col.filter((colI) => {return colI.title.toUpperCase().startsWith(\"$Token0\")})}; let srh = $Charset; let res = []; let tuple; srh.forEach((seI) => {let filtok = \"$Token0\" + seI; let interRes = col.filter((colI) => {return colI.title.toUpperCase().startsWith(filtok)}); if (interRes.length>0) {tuple = {\"title\":\"\"}; tuple.token = filtok; tuple.title = filtok + \" - \" + interRes.length + \" items.\"; tuple.subtitle = interRes[0].title + \" - \" + interRes[interRes.length -1].title; res.push(tuple)}}); res;",
+                                "command": "DYNAMIK let col = $Collection0; if (\"$Token0\".length>0) {col = col.filter((colI) => {return colI.title.toUpperCase().startsWith(\"$Token0\")})}; let srh = $Search; let res = []; let tuple; srh.forEach((seI) => {let filtok = \"$Token0\" + seI; let interRes = col.filter((colI) => {return colI.title.toUpperCase().startsWith(filtok)}); if (interRes.length>0) {tuple = {\"title\":\"\"}; tuple.token = filtok; tuple.title = filtok + \" - \" + interRes.length + \" items.\"; tuple.subtitle = interRes[0].title + \" - \" + interRes[interRes.length -1].title; res.push(tuple)}}); res;",
                                 "queryresult": "$.*",
                                 "itemname": "DYNAMIK JSON.parse(\"$Result\").title",
                                 "itemlabel": "DYNAMIK JSON.parse(\"$Result\").subtitle",
@@ -547,7 +550,7 @@
                             {"type": "static", "command": ".", "itemtype": "tile", "itemimage": "$ImageLocation/search.jpg"},
                             {
                                 "type": "static",
-                                "command": "DYNAMIK let col = $Collection1; if (\"$Token1\".length>0) {col = col.filter((colI) => {return colI.title.toUpperCase().startsWith(\"$Token1\")})}; let srh = $Charset; let res = []; let tuple; srh.forEach((seI) => {let filtok = \"$Token1\" + seI; let interRes = col.filter((colI) => {return colI.title.toUpperCase().startsWith(filtok)}); if (interRes.length>0) {tuple = {\"title\":\"\"}; tuple.token = filtok; tuple.title = filtok + \" - \" + interRes.length + \" items.\"; tuple.subtitle = interRes[0].title + \" - \" + interRes[interRes.length -1].title; res.push(tuple)}}); res;",
+                                "command": "DYNAMIK let col = $Collection1; if (\"$Token1\".length>0) {col = col.filter((colI) => {return colI.title.toUpperCase().startsWith(\"$Token1\")})}; let srh = $Search; let res = []; let tuple; srh.forEach((seI) => {let filtok = \"$Token1\" + seI; let interRes = col.filter((colI) => {return colI.title.toUpperCase().startsWith(filtok)}); if (interRes.length>0) {tuple = {\"title\":\"\"}; tuple.token = filtok; tuple.title = filtok + \" - \" + interRes.length + \" items.\"; tuple.subtitle = interRes[0].title + \" - \" + interRes[interRes.length -1].title; res.push(tuple)}}); res;",
                                 "queryresult": "$.*",
                                 "itemname": "DYNAMIK JSON.parse(\"$Result\").title",
                                 "itemlabel": "DYNAMIK JSON.parse(\"$Result\").subtitle",
@@ -665,7 +668,7 @@
                             {"type": "static", "command": ".", "itemtype": "tile", "itemimage": "$ImageLocation/search.jpg"},
                             {
                                 "type": "static",
-                                "command": "DYNAMIK let col = $Collection2; if (\"$Token0\".length>0) {col = col.filter((colI) => {return colI.title.toUpperCase().startsWith(\"$Token2\")})}; let srh = $Charset; let res = []; let tuple; srh.forEach((seI) => {let filtok = \"$Token2\" + seI; let interRes = col.filter((colI) => {return colI.title.toUpperCase().startsWith(filtok)}); if (interRes.length>0) {tuple = {\"title\":\"\"}; tuple.token = filtok; tuple.title = filtok + \" - \" + interRes.length + \" items.\"; tuple.subtitle = interRes[0].title + \" - \" + interRes[interRes.length -1].title; res.push(tuple)}}); res;",
+                                "command": "DYNAMIK let col = $Collection2; if (\"$Token0\".length>0) {col = col.filter((colI) => {return colI.title.toUpperCase().startsWith(\"$Token2\")})}; let srh = $Search; let res = []; let tuple; srh.forEach((seI) => {let filtok = \"$Token2\" + seI; let interRes = col.filter((colI) => {return colI.title.toUpperCase().startsWith(filtok)}); if (interRes.length>0) {tuple = {\"title\":\"\"}; tuple.token = filtok; tuple.title = filtok + \" - \" + interRes.length + \" items.\"; tuple.subtitle = interRes[0].title + \" - \" + interRes[interRes.length -1].title; res.push(tuple)}}); res;",
                                 "queryresult": "$.*",
                                 "itemname": "DYNAMIK JSON.parse(\"$Result\").title",
                                 "itemlabel": "DYNAMIK JSON.parse(\"$Result\").subtitle",
@@ -785,7 +788,7 @@
                             {"type": "static", "command": ".", "itemtype": "tile", "itemimage": "$ImageLocation/search.jpg"},
                             {
                                 "type": "static",
-                                "command": "DYNAMIK let col = $Collection3; if (\"$Token3\".length>0) {col = col.filter((colI) => {return colI.title.toUpperCase().startsWith(\"$Token3\")})}; let srh = $Charset; let res = []; let tuple; srh.forEach((seI) => {let filtok = \"$Token3\" + seI; let interRes = col.filter((colI) => {return colI.title.toUpperCase().startsWith(filtok)}); if (interRes.length>0) {tuple = {\"title\":\"\"}; tuple.token = filtok; tuple.title = filtok + \" - \" + interRes.length + \" items.\"; tuple.subtitle = interRes[0].title + \" - \" + interRes[interRes.length -1].title; res.push(tuple)}}); res;",
+                                "command": "DYNAMIK let col = $Collection3; if (\"$Token3\".length>0) {col = col.filter((colI) => {return colI.title.toUpperCase().startsWith(\"$Token3\")})}; let srh = $Search; let res = []; let tuple; srh.forEach((seI) => {let filtok = \"$Token3\" + seI; let interRes = col.filter((colI) => {return colI.title.toUpperCase().startsWith(filtok)}); if (interRes.length>0) {tuple = {\"title\":\"\"}; tuple.token = filtok; tuple.title = filtok + \" - \" + interRes.length + \" items.\"; tuple.subtitle = interRes[0].title + \" - \" + interRes[interRes.length -1].title; res.push(tuple)}}); res;",
                                 "queryresult": "$.*",
                                 "itemname": "DYNAMIK JSON.parse(\"$Result\").title",
                                 "itemlabel": "DYNAMIK JSON.parse(\"$Result\").subtitle",
@@ -896,7 +899,7 @@
                             {"type": "static", "command": ".", "itemtype": "tile", "itemimage": "$ImageLocation/search.jpg"},
                             {
                                 "type": "static",
-                                "command": "DYNAMIK let col = $Collection4; if (\"$Token4\".length>0) {col = col.filter((colI) => {return colI.title.toUpperCase().startsWith(\"$Token4\")})}; let srh = $Charset; let res = []; let tuple; srh.forEach((seI) => {let filtok = \"$Token4\" + seI; let interRes = col.filter((colI) => {return colI.title.toUpperCase().startsWith(filtok)}); if (interRes.length>0) {tuple = {\"title\":\"\"}; tuple.token = filtok; tuple.title = filtok + \" - \" + interRes.length + \" items.\"; tuple.subtitle = interRes[0].title + \" - \" + interRes[interRes.length -1].title; res.push(tuple)}}); res;",
+                                "command": "DYNAMIK let col = $Collection4; if (\"$Token4\".length>0) {col = col.filter((colI) => {return colI.title.toUpperCase().startsWith(\"$Token4\")})}; let srh = $Search; let res = []; let tuple; srh.forEach((seI) => {let filtok = \"$Token4\" + seI; let interRes = col.filter((colI) => {return colI.title.toUpperCase().startsWith(filtok)}); if (interRes.length>0) {tuple = {\"title\":\"\"}; tuple.token = filtok; tuple.title = filtok + \" - \" + interRes.length + \" items.\"; tuple.subtitle = interRes[0].title + \" - \" + interRes[interRes.length -1].title; res.push(tuple)}}); res;",
                                 "queryresult": "$.*",
                                 "itemname": "DYNAMIK JSON.parse(\"$Result\").title",
                                 "itemlabel": "DYNAMIK JSON.parse(\"$Result\").subtitle",
@@ -1051,7 +1054,7 @@
                             {"type": "static", "command": ".", "itemtype": "tile", "itemimage": "$ImageLocation/search.jpg"},
                             {
                                 "type": "static",
-                                "command": "DYNAMIK let col = $Collection0; if (\"$Token0\".length>0) {col = col.filter((colI) => {return colI.title.toUpperCase().startsWith(\"$Token0\")})}; let srh = $Charset; let res = []; let tuple; srh.forEach((seI) => {let filtok = \"$Token0\" + seI; let interRes = col.filter((colI) => {return colI.title.toUpperCase().startsWith(filtok)}); if (interRes.length>0) {tuple = {\"title\":\"\"}; tuple.token = filtok; tuple.title = filtok + \" - \" + interRes.length + \" items.\"; tuple.subtitle = interRes[0].title + \" - \" + interRes[interRes.length -1].title; res.push(tuple)}}); res;",
+                                "command": "DYNAMIK let col = $Collection0; if (\"$Token0\".length>0) {col = col.filter((colI) => {return colI.title.toUpperCase().startsWith(\"$Token0\")})}; let srh = $Search; let res = []; let tuple; srh.forEach((seI) => {let filtok = \"$Token0\" + seI; let interRes = col.filter((colI) => {return colI.title.toUpperCase().startsWith(filtok)}); if (interRes.length>0) {tuple = {\"title\":\"\"}; tuple.token = filtok; tuple.title = filtok + \" - \" + interRes.length + \" items.\"; tuple.subtitle = interRes[0].title + \" - \" + interRes[interRes.length -1].title; res.push(tuple)}}); res;",
                                 "queryresult": "$.*",
                                 "itemname": "DYNAMIK JSON.parse(\"$Result\").title",
                                 "itemlabel": "DYNAMIK JSON.parse(\"$Result\").subtitle",
@@ -1154,7 +1157,7 @@
                             {"type": "static", "command": ".", "itemtype": "tile", "itemimage": "$ImageLocation/search.jpg"},
                             {
                                 "type": "static",
-                                "command": "DYNAMIK let col = $Collection0; if (\"$Token0\".length>0) {col = col.filter((colI) => {return colI.title.toUpperCase().startsWith(\"$Token0\")})}; let srh = $Charset; let res = []; let tuple; srh.forEach((seI) => {let filtok = \"$Token0\" + seI; let interRes = col.filter((colI) => {return colI.title.toUpperCase().startsWith(filtok)}); if (interRes.length>0) {tuple = {\"title\":\"\"}; tuple.token = filtok; tuple.title = filtok + \" - \" + interRes.length + \" items.\"; tuple.subtitle = interRes[0].title + \" - \" + interRes[interRes.length -1].title; res.push(tuple)}}); res;",
+                                "command": "DYNAMIK let col = $Collection0; if (\"$Token0\".length>0) {col = col.filter((colI) => {return colI.title.toUpperCase().startsWith(\"$Token0\")})}; let srh = $Search; let res = []; let tuple; srh.forEach((seI) => {let filtok = \"$Token0\" + seI; let interRes = col.filter((colI) => {return colI.title.toUpperCase().startsWith(filtok)}); if (interRes.length>0) {tuple = {\"title\":\"\"}; tuple.token = filtok; tuple.title = filtok + \" - \" + interRes.length + \" items.\"; tuple.subtitle = interRes[0].title + \" - \" + interRes[interRes.length -1].title; res.push(tuple)}}); res;",
                                 "queryresult": "$.*",
                                 "itemname": "DYNAMIK JSON.parse(\"$Result\").title",
                                 "itemlabel": "DYNAMIK JSON.parse(\"$Result\").subtitle",
@@ -1296,7 +1299,7 @@
                                 "itemname": "Playlist",
                                 "itemlabel": "New Playlist",
                                 "itemimage": "$ImageLocation/add.jpg",
-                                "evalwrite": [{"variable": "PlaylistName", "value": ""}],
+                                "evalwrite": [{"variable": "PlaylistName", "value": ""}, {"variable": "Shift", "value": true}],
                                 "evalnext": [{"test": true, "then": "NewPlaylist"}]
                             },
                             {
@@ -1327,10 +1330,20 @@
                             },
                             {
                                 "type": "static",
-                                "command": "DYNAMIK let srh = $Charset; let res = []; let tuple; srh.forEach((seI) => {let name = \"$PlaylistName\" + seI; tuple = {\"name\":\"\"}; tuple.name = name; tuple.char = seI; res.push(tuple)}); res;",
+                                "command": ".",
+                                "itemname": "DYNAMIK \"Shift \" + ($Shift ? \"OFF\" : \"ON\")",
+                                "itemimage": "$ImageLocation/shift.jpg",
+                                "evalwrite": [{"variable": "Shift", "value": "DYNAMIK !$Shift"}],
+                                "evalnext": [{"test": true, "then": "NewPlaylist"}]},
+                            {
+                                "type": "static",
+                                "command": "DYNAMIK let srh = ($Shift ? $UpperCase : $LowerCase); let res = []; let tuple; srh.forEach((seI) => {let name = \"$PlaylistName\" + seI; tuple = {\"name\":\"\"}; tuple.name = name; tuple.char = seI; res.push(tuple)}); res;",
                                 "queryresult": "$.*",
                                 "itemname": "DYNAMIK JSON.parse(\"$Result\").char",
-                                "evalwrite": [{"variable": "PlaylistName", "value": "DYNAMIK JSON.parse(\"$Result\").name"}],
+                                "evalwrite": [
+                                    {"variable": "PlaylistName", "value": "DYNAMIK JSON.parse(\"$Result\").name"},
+                                    {"variable": "Shift", "value": false}
+                                ],
                                 "evalnext": [{"test": true, "then": "NewPlaylist"}]
                             }
                         ]
