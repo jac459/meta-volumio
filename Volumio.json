@@ -114,9 +114,11 @@
             "Token4": "",
             "Token5": "",
             "Search": "[\" \", \".\", \"?\", \",\", \"!\", \"@\", \"#\", \"$\", \"%\", \"^\", \"&\", \"*\", \"(\", \")\", \"-\", \"+\", \"=\", \"{\", \"}\", \"[\", \"]\", \"0\", \"1\", \"2\", \"3\", \"4\", \"5\", \"6\", \"7\", \"8\", \"9\", \"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\", \"I\", \"J\", \"K\", \"L\", \"M\", \"N\", \"O\", \"P\", \"Q\", \"R\", \"S\", \"T\", \"U\", \"V\", \"W\", \"X\", \"Y\", \"Z\"]",
-            "UpperCase": "[\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\", \"I\", \"J\", \"K\", \"L\", \"M\", \"N\", \"O\", \"P\", \"Q\", \"R\", \"S\", \"T\", \"U\", \"V\", \"W\", \"X\", \"Y\", \"Z\", \"0\", \"1\", \"2\", \"3\", \"4\", \"5\", \"6\", \"7\", \"8\", \"9\", \" \", \"-\"]",
-            "LowerCase": "[\"a\", \"b\", \"c\", \"d\", \"e\", \"f\", \"g\", \"h\", \"i\", \"j\", \"k\", \"l\", \"m\", \"n\", \"o\", \"p\", \"q\", \"r\", \"s\", \"t\", \"u\", \"v\", \"w\", \"x\", \"y\", \"z\", \"0\", \"1\", \"2\", \"3\", \"4\", \"5\", \"6\", \"7\", \"8\", \"9\", \" \", \"-\"]",
+            "UpperCase": "[\"A\", \"B\", \"C\", \"D\", \"E\", \"F\", \"G\", \"H\", \"I\", \"J\", \"K\", \"L\", \"M\", \"N\", \"O\", \"P\", \"Q\", \"R\", \"S\", \"T\", \"U\", \"V\", \"W\", \"X\", \"Y\", \"Z\", \" \", \"-\"]",
+            "LowerCase": "[\"a\", \"b\", \"c\", \"d\", \"e\", \"f\", \"g\", \"h\", \"i\", \"j\", \"k\", \"l\", \"m\", \"n\", \"o\", \"p\", \"q\", \"r\", \"s\", \"t\", \"u\", \"v\", \"w\", \"x\", \"y\", \"z\", \" \", \"-\"]",
+            "NumKeys": "[\"0\", \"1\", \"2\", \"3\", \"4\", \"5\", \"6\", \"7\", \"8\", \"9\", \" \", \"-\"]",
             "Shift": true,
+            "NumLock": false,
             "PlaylistName": ""
         },
         "persistedvariables": {"MyShortcuts": ""},
@@ -285,14 +287,7 @@
                         "commandset": [
                             {"type": "static", "command": ".", "itemtype": "tile", "itemimage": "$MyAlbumArt0URI"},
                             {"type": "static", "command": ".",  "itemname": "$MyBrowseName", "itemlabel": "Open Menu", "itemimage": "$ImageLocation/menu.jpg", "evalnext": [{"test": true, "then": "CollectionMenu"}]},
-                            {
-                                "type": "static",
-                                "command": ".",
-                                "itemname": "Search",
-                                "itemlabel": "Search Collection",
-                                "itemimage": "$ImageLocation/search.jpg",
-                                "evalnext": [{"test": true, "then": "Browse0Search"}]
-                            },
+                            {"type": "static", "command": ".", "itemname": "Search", "itemlabel": "Search Collection", "itemimage": "$ImageLocation/search.jpg", "evalnext": [{"test": true, "then": "Browse0Search"}]},
                             {
                                 "type": "http-get",
                                 "command": "$VolumioURI/api/v1/browse?uri=$MyBrowse0URI",
@@ -336,14 +331,7 @@
                         "commandset": [
                             {"type": "static", "command": ".", "itemtype": "tile", "itemimage": "$MyAlbumArt0URI"},
                             {"type": "static", "command": ".",  "itemname": "$MyBrowseName", "itemlabel": "Open Menu", "itemimage": "$ImageLocation/menu.jpg", "evalnext": [{"test": true, "then": "CollectionMenu"}]},
-                            {
-                                "type": "static",
-                                "command": ".",
-                                "itemname": "Search",
-                                "itemlabel": "Search Collection",
-                                "itemimage": "$ImageLocation/search.jpg",
-                                "evalnext": [{"test": true, "then": "Browse0Search"}]
-                            },
+                            {"type": "static", "command": ".", "itemname": "Search", "itemlabel": "Search Collection", "itemimage": "$ImageLocation/search.jpg", "evalnext": [{"test": true, "then": "Browse0Search"}]},
                             {
                                 "type": "static",
                                 "command": "DYNAMIK let col = $Collection0; if (\"$Token0\".length>0) {col = col.filter((colI) => {return colI.title.toUpperCase().startsWith(\"$Token0\")})}; col;",
@@ -385,7 +373,6 @@
                     "Browse0Search": {
                         "label": "Search",
                         "commandset": [
-                            {"type": "static", "command": ".", "itemtype": "tile", "itemimage": "$ImageLocation/search.jpg"},
                             {
                                 "type": "static",
                                 "command": "DYNAMIK let col = $Collection0; if (\"$Token0\".length>0) {col = col.filter((colI) => {return colI.title.toUpperCase().startsWith(\"$Token0\")})}; let srh = $Search; let res = []; let tuple; srh.forEach((seI) => {let filtok = \"$Token0\" + seI; let interRes = col.filter((colI) => {return colI.title.toUpperCase().startsWith(filtok)}); if (interRes.length>0) {tuple = {\"title\":\"\"}; tuple.token = filtok; tuple.title = filtok + \" - \" + interRes.length + \" items.\"; tuple.subtitle = interRes[0].title + \" - \" + interRes[interRes.length -1].title; res.push(tuple)}}); res;",
@@ -403,14 +390,7 @@
                         "commandset": [
                             {"type": "static", "command": ".", "itemtype": "tile", "itemimage": "$MyAlbumArt1URI"},
                             {"type": "static", "command": ".",  "itemname": "$MyBrowseName", "itemlabel": "Open Menu", "itemimage": "$ImageLocation/menu.jpg", "evalnext": [{"test": true, "then": "CollectionMenu"}]},
-                            {
-                                "type": "static",
-                                "command": ".",
-                                "itemname": "Search",
-                                "itemlabel": "Search Collection",
-                                "itemimage": "$ImageLocation/search.jpg",
-                                "evalnext": [{"test": true, "then": "Browse1Search"}]
-                            },
+                            {"type": "static", "command": ".", "itemname": "Search", "itemlabel": "Search Collection", "itemimage": "$ImageLocation/search.jpg", "evalnext": [{"test": true, "then": "Browse1Search"}]},
                             {
                                 "type": "http-get",
                                 "command": "$VolumioURI/api/v1/browse?uri=$MyBrowse1URI",
@@ -454,14 +434,7 @@
                         "commandset": [
                             {"type": "static", "command": ".", "itemtype": "tile", "itemimage": "$MyAlbumArt1URI"},
                             {"type": "static", "command": ".",  "itemname": "$MyBrowseName", "itemlabel": "Open Menu", "itemimage": "$ImageLocation/menu.jpg", "evalnext": [{"test": true, "then": "CollectionMenu"}]},
-                            {
-                                "type": "static",
-                                "command": ".",
-                                "itemname": "Search",
-                                "itemlabel": "Search Collection",
-                                "itemimage": "$ImageLocation/search.jpg",
-                                "evalnext": [{"test": true, "then": "Browse1Search"}]
-                            },
+                            {"type": "static", "command": ".", "itemname": "Search", "itemlabel": "Search Collection", "itemimage": "$ImageLocation/search.jpg", "evalnext": [{"test": true, "then": "Browse1Search"}]},
                             {
                                 "type": "static",
                                 "command": "DYNAMIK let col = $Collection1; if (\"$Token0\".length>0) {col = col.filter((colI) => {return colI.title.toUpperCase().startsWith(\"$Token1\")})}; col;",
@@ -503,7 +476,6 @@
                     "Browse1Search": {
                         "label": "Search",
                         "commandset": [
-                            {"type": "static", "command": ".", "itemtype": "tile", "itemimage": "$ImageLocation/search.jpg"},
                             {
                                 "type": "static",
                                 "command": "DYNAMIK let col = $Collection1; if (\"$Token1\".length>0) {col = col.filter((colI) => {return colI.title.toUpperCase().startsWith(\"$Token1\")})}; let srh = $Search; let res = []; let tuple; srh.forEach((seI) => {let filtok = \"$Token1\" + seI; let interRes = col.filter((colI) => {return colI.title.toUpperCase().startsWith(filtok)}); if (interRes.length>0) {tuple = {\"title\":\"\"}; tuple.token = filtok; tuple.title = filtok + \" - \" + interRes.length + \" items.\"; tuple.subtitle = interRes[0].title + \" - \" + interRes[interRes.length -1].title; res.push(tuple)}}); res;",
@@ -521,14 +493,7 @@
                         "commandset": [
                             {"type": "static", "command": ".", "itemtype": "tile", "itemimage": "$MyAlbumArt2URI"},
                             {"type": "static", "command": ".",  "itemname": "$MyBrowseName", "itemlabel": "Open Menu", "itemimage": "$ImageLocation/menu.jpg", "evalnext": [{"test": true, "then": "CollectionMenu"}]},
-                            {
-                                "type": "static",
-                                "command": ".",
-                                "itemname": "Search",
-                                "itemlabel": "Search Collection",
-                                "itemimage": "$ImageLocation/search.jpg",
-                                "evalnext": [{"test": true, "then": "Browse2Search"}]
-                            },
+                            {"type": "static", "command": ".", "itemname": "Search", "itemlabel": "Search Collection", "itemimage": "$ImageLocation/search.jpg", "evalnext": [{"test": true, "then": "Browse2Search"}]},
                             {
                                 "type": "http-get",
                                 "command": "$VolumioURI/api/v1/browse?uri=$MyBrowse2URI",
@@ -572,14 +537,7 @@
                         "commandset": [
                             {"type": "static", "command": ".", "itemtype": "tile", "itemimage": "$MyAlbumArt2URI"},
                             {"type": "static", "command": ".",  "itemname": "$MyBrowseName", "itemlabel": "Open Menu", "itemimage": "$ImageLocation/menu.jpg", "evalnext": [{"test": true, "then": "CollectionMenu"}]},
-                            {
-                                "type": "static",
-                                "command": ".",
-                                "itemname": "Search",
-                                "itemlabel": "Search Collection",
-                                "itemimage": "$ImageLocation/search.jpg",
-                                "evalnext": [{"test": true, "then": "Browse2Search"}]
-                            },
+                            {"type": "static", "command": ".", "itemname": "Search", "itemlabel": "Search Collection", "itemimage": "$ImageLocation/search.jpg", "evalnext": [{"test": true, "then": "Browse2Search"}]},
                             {
                                 "type": "static",
                                 "command": "DYNAMIK let col = $Collection2; if (\"$Token0\".length>0) {col = col.filter((colI) => {return colI.title.toUpperCase().startsWith(\"$Token2\")})}; col;",
@@ -621,7 +579,6 @@
                     "Browse2Search": {
                         "label": "Search",
                         "commandset": [
-                            {"type": "static", "command": ".", "itemtype": "tile", "itemimage": "$ImageLocation/search.jpg"},
                             {
                                 "type": "static",
                                 "command": "DYNAMIK let col = $Collection2; if (\"$Token0\".length>0) {col = col.filter((colI) => {return colI.title.toUpperCase().startsWith(\"$Token2\")})}; let srh = $Search; let res = []; let tuple; srh.forEach((seI) => {let filtok = \"$Token2\" + seI; let interRes = col.filter((colI) => {return colI.title.toUpperCase().startsWith(filtok)}); if (interRes.length>0) {tuple = {\"title\":\"\"}; tuple.token = filtok; tuple.title = filtok + \" - \" + interRes.length + \" items.\"; tuple.subtitle = interRes[0].title + \" - \" + interRes[interRes.length -1].title; res.push(tuple)}}); res;",
@@ -639,15 +596,7 @@
                         "commandset": [
                             {"type": "static", "command": ".", "itemtype": "tile", "itemimage": "$MyAlbumArt3URI"},
                             {"type": "static", "command": ".",  "itemname": "$MyBrowseName", "itemlabel": "Open Menu", "itemimage": "$ImageLocation/menu.jpg", "evalnext": [{"test": true, "then": "CollectionMenu"}]},
-                            {
-                                "type": "static",
-                                "command": ".",
-                                "itemname": "Search",
-                                "itemlabel": "Search Collection",
-                                "itemimage": "$ImageLocation/search.jpg",
-                                "evalwrite": [{"variable": "Token", "value": ""}],
-                                "evalnext": [{"test": true, "then": "Browse3Search"}]
-                            },
+                            {"type": "static", "command": ".", "itemname": "Search", "itemlabel": "Search Collection", "itemimage": "$ImageLocation/search.jpg", "evalnext": [{"test": true, "then": "Browse3Search"}]},
                             {
                                 "type": "http-get",
                                 "command": "$VolumioURI/api/v1/browse?uri=$MyBrowse3URI",
@@ -691,15 +640,7 @@
                         "commandset": [
                             {"type": "static", "command": ".", "itemtype": "tile", "itemimage": "$MyAlbumArt3URI"},
                             {"type": "static", "command": ".",  "itemname": "$MyBrowseName", "itemlabel": "Open Menu", "itemimage": "$ImageLocation/menu.jpg", "evalnext": [{"test": true, "then": "CollectionMenu"}]},
-                            {
-                                "type": "static",
-                                "command": ".",
-                                "itemname": "Search",
-                                "itemlabel": "Search Collection",
-                                "itemimage": "$ImageLocation/search.jpg",
-                                "evalwrite": [{"variable": "Token", "value": ""}],
-                                "evalnext": [{"test": true, "then": "Browse3Search"}]
-                            },
+                            {"type": "static", "command": ".", "itemname": "Search", "itemlabel": "Search Collection", "itemimage": "$ImageLocation/search.jpg", "evalnext": [{"test": true, "then": "Browse3Search"}]},
                             {
                                 "type": "static",
                                 "command": "DYNAMIK let col = $Collection3; if (\"$Token3\".length>0) {col = col.filter((colI) => {return colI.title.toUpperCase().startsWith(\"$Token3\")})}; col;",
@@ -741,7 +682,6 @@
                     "Browse3Search": {
                         "label": "Search",
                         "commandset": [
-                            {"type": "static", "command": ".", "itemtype": "tile", "itemimage": "$ImageLocation/search.jpg"},
                             {
                                 "type": "static",
                                 "command": "DYNAMIK let col = $Collection3; if (\"$Token3\".length>0) {col = col.filter((colI) => {return colI.title.toUpperCase().startsWith(\"$Token3\")})}; let srh = $Search; let res = []; let tuple; srh.forEach((seI) => {let filtok = \"$Token3\" + seI; let interRes = col.filter((colI) => {return colI.title.toUpperCase().startsWith(filtok)}); if (interRes.length>0) {tuple = {\"title\":\"\"}; tuple.token = filtok; tuple.title = filtok + \" - \" + interRes.length + \" items.\"; tuple.subtitle = interRes[0].title + \" - \" + interRes[interRes.length -1].title; res.push(tuple)}}); res;",
@@ -759,14 +699,7 @@
                         "commandset": [
                             {"type": "static", "command": ".", "itemtype": "tile", "itemimage": "$MyAlbumArt4URI"},
                             {"type": "static", "command": ".",  "itemname": "$MyBrowseName", "itemlabel": "Open Menu", "itemimage": "$ImageLocation/menu.jpg", "evalnext": [{"test": true, "then": "CollectionMenu"}]},
-                            {
-                                "type": "static",
-                                "command": ".",
-                                "itemname": "Search",
-                                "itemlabel": "Search Collection",
-                                "itemimage": "$ImageLocation/search.jpg",
-                                "evalnext": [{"test": true, "then": "Browse4Search"}]
-                            },
+                            {"type": "static", "command": ".", "itemname": "Search", "itemlabel": "Search Collection", "itemimage": "$ImageLocation/search.jpg", "evalnext": [{"test": true, "then": "Browse4Search"}]},
                             {
                                 "type": "http-get",
                                 "command": "$VolumioURI/api/v1/browse?uri=$MyBrowse4URI",
@@ -852,7 +785,6 @@
                     "Browse4Search": {
                         "label": "Search",
                         "commandset": [
-                            {"type": "static", "command": ".", "itemtype": "tile", "itemimage": "$ImageLocation/search.jpg"},
                             {
                                 "type": "static",
                                 "command": "DYNAMIK let col = $Collection4; if (\"$Token4\".length>0) {col = col.filter((colI) => {return colI.title.toUpperCase().startsWith(\"$Token4\")})}; let srh = $Search; let res = []; let tuple; srh.forEach((seI) => {let filtok = \"$Token4\" + seI; let interRes = col.filter((colI) => {return colI.title.toUpperCase().startsWith(filtok)}); if (interRes.length>0) {tuple = {\"title\":\"\"}; tuple.token = filtok; tuple.title = filtok + \" - \" + interRes.length + \" items.\"; tuple.subtitle = interRes[0].title + \" - \" + interRes[interRes.length -1].title; res.push(tuple)}}); res;",
@@ -1007,7 +939,6 @@
                     "ArtistsSearch": {
                         "label": "Search Artist",
                         "commandset": [
-                            {"type": "static", "command": ".", "itemtype": "tile", "itemimage": "$ImageLocation/search.jpg"},
                             {
                                 "type": "static",
                                 "command": "DYNAMIK let col = $Collection0; if (\"$Token0\".length>0) {col = col.filter((colI) => {return colI.title.toUpperCase().startsWith(\"$Token0\")})}; let srh = $Search; let res = []; let tuple; srh.forEach((seI) => {let filtok = \"$Token0\" + seI; let interRes = col.filter((colI) => {return colI.title.toUpperCase().startsWith(filtok)}); if (interRes.length>0) {tuple = {\"title\":\"\"}; tuple.token = filtok; tuple.title = filtok + \" - \" + interRes.length + \" items.\"; tuple.subtitle = interRes[0].title + \" - \" + interRes[interRes.length -1].title; res.push(tuple)}}); res;",
@@ -1110,7 +1041,6 @@
                     "AllAlbumsSearch": {
                         "label": "Search Album",
                         "commandset": [
-                            {"type": "static", "command": ".", "itemtype": "tile", "itemimage": "$ImageLocation/search.jpg"},
                             {
                                 "type": "static",
                                 "command": "DYNAMIK let col = $Collection0; if (\"$Token0\".length>0) {col = col.filter((colI) => {return colI.title.toUpperCase().startsWith(\"$Token0\")})}; let srh = $Search; let res = []; let tuple; srh.forEach((seI) => {let filtok = \"$Token0\" + seI; let interRes = col.filter((colI) => {return colI.title.toUpperCase().startsWith(filtok)}); if (interRes.length>0) {tuple = {\"title\":\"\"}; tuple.token = filtok; tuple.title = filtok + \" - \" + interRes.length + \" items.\"; tuple.subtitle = interRes[0].title + \" - \" + interRes[interRes.length -1].title; res.push(tuple)}}); res;",
@@ -1208,6 +1138,7 @@
                         "label": "Collections List",
                         "commandset": [
                             {"type": "static", "command": ".", "itemtype": "tile", "itemimage": "$MyAlbumArtURI"},
+                            {"type": "static", "command": ".", "itemname": "Close", "itemlabel": "Close Directory", "itemimage": "$ImageLocation/closefolder.jpg", "itemaction": "ACTION_Dummy", "itemUI": "close"},
                             {"type": "static", "command": ".", "itemname": "Play", "itemlabel": "Play Selection", "itemimage": "$ImageLocation/play.jpg", "itemaction": "ACTION_Play", "itemUI": "close"},
                             {
                                 "type": "static",
@@ -1243,6 +1174,7 @@
                         "label": "Collections List",
                         "commandset": [
                             {"type": "static", "command": ".", "itemtype": "tile", "itemimage": "$MyAlbumArtURI"},
+                            {"type": "static", "command": ".", "itemname": "Close", "itemlabel": "Close Directory", "itemimage": "$ImageLocation/closefolder.jpg", "itemaction": "ACTION_Dummy", "itemUI": "close"},
                             {"type": "static", "command": ".", "itemname": "Play", "itemlabel": "Play Selection", "itemimage": "$ImageLocation/play.jpg", "itemaction": "ACTION_Play", "itemUI": "close"},
                             {
                                 "type": "static",
@@ -1275,6 +1207,7 @@
                             {"type": "static", "command": ".", "itemname": "Delete", "itemlabel": "Delete Playlist", "itemimage": "$ImageLocation/delete.jpg", "itemaction": "ACTION_PlaylistDelete", "itemUI": "close"}
                         ]
                     },
+                    "ACTION_Dummy": {"label": "", "commandset": [{"type": "static", "command": "."}]},
                     "ACTION_Play": {"label": "", "commandset": [{"type": "socketIO", "command": "DYNAMIK let pkt = {\"call\":\"replaceAndPlay\", \"message\":\"\"}; pkt.message = $PlayPayLoad; pkt;"}]},
                     "ACTION_Queue": {"label": "", "commandset": [{"type": "socketIO", "command": "DYNAMIK let pkt = {\"call\":\"addToQueue\", \"message\":\"\"}; pkt.message = $PlayPayLoad; pkt;"}]},
                     "ACTION_PlaylistDelete": {"label": "", "commandset": [{"type": "socketIO", "command": "{\"call\":\"deletePlaylist\", \"message\": {\"name\": \"$PlaylistName\"}}"}]},
@@ -1311,7 +1244,7 @@
                             {"type": "static", "command": ".", "itemname": "Clear", "itemlabel": "Clear Queue", "itemimage": "$ImageLocation/delete.jpg", "itemaction": "QUEUE_Clear", "itemUI": "close"},
                             {"type": "static", "command": ".", "itemname": "Shuffle", "itemlabel": "DYNAMIK \"Turn Queue Shuffle \" + ($Shuffle ? \"Off\" : \"On\")", "itemimage": "$ImageLocation/shuffle.jpg", "itemaction": "QUEUE_Shuffle", "itemUI": "goBack"},
                             {"type": "static", "command": ".", "itemname": "Repeat", "itemlabel": "DYNAMIK \"Turn Queue Repeat \" + ($Repeat ? \"Off\" : \"On\")", "itemimage": "$ImageLocation/repeat.jpg", "itemaction": "QUEUE_Repeat", "itemUI": "goBack"},
-                            {"type": "static", "command": ".", "itemname": "Playlist", "itemlabel": "Save Queue to Playlist", "itemimage": "$ImageLocation/fav.jpg", "evalnext": [{"test": true, "then": "AddToPlaylist"}]}
+                            {"type": "static", "command": ".", "itemname": "Playlist", "itemlabel": "Save Queue to Playlist", "itemimage": "$ImageLocation/fav.jpg", "evalnext": [{"test": true, "then": "SaveToPlaylist"}]}
                         ]
                     },
                     "QueueItemMenu": {
@@ -1322,7 +1255,7 @@
                             {"type": "static", "command": ".", "itemname": "Remove", "itemlabel": "Remove from Queue", "itemimage": "$ImageLocation/delete.jpg", "itemaction": "QUEUE_Remove", "itemUI": "close"}
                         ]
                     },
-                    "AddToPlaylist": {
+                    "SaveToPlaylist": {
                         "label": "Playlist",
                         "commandset": [
                             {"type": "static", "command": ".", "itemtype": "tile", "itemimage": "$ImageLocation/fav.jpg"},
@@ -1332,7 +1265,7 @@
                                 "itemname": "Playlist",
                                 "itemlabel": "New Playlist",
                                 "itemimage": "$ImageLocation/add.jpg",
-                                "evalwrite": [{"variable": "PlaylistName", "value": ""}, {"variable": "Shift", "value": true}],
+                                "evalwrite": [{"variable": "PlaylistName", "value": ""}, {"variable": "Shift", "value": true}, {"variable": "NumLock", "value": false}],
                                 "evalnext": [{"test": true, "then": "NewPlaylist"}]
                             },
                             {
@@ -1343,14 +1276,13 @@
                                 "itemaction": "QUEUE_SaveToPlaylist",
                                 "itemUI": "close",
                                 "itemimage": "$ImageLocation/fav.jpg",
-                                "evalwrite": [{"variable": "PlaylistName", "value": "DYNAMIK JSON.parse(\"$Result\").name"}]
+                                "evalwrite": [{"variable": "PlaylistName", "value": "DYNAMIK JSON.parse(\"$Result\").title"}]
                             }
                         ]
                     },
                     "NewPlaylist": {
                         "label": "Create New Playlist",
                         "commandset": [
-                            {"type": "static", "command": ".", "itemtype": "tile", "itemimage": "$ImageLocation/fav.jpg"},
                             {
                                 "type": "static",
                                 "command": ".",
@@ -1366,13 +1298,22 @@
                                 "itemname": "DYNAMIK \"Shift \" + ($Shift ? \"OFF\" : \"ON\")",
                                 "itemimage": "$ImageLocation/shift.jpg",
                                 "evalwrite": [{"variable": "Shift", "value": "DYNAMIK !$Shift"}],
-                                "evalnext": [{"test": true, "then": "NewPlaylist"}]},
+                                "evalnext": [{"test": true, "then": "NewPlaylist"}]
+                            },
                             {
                                 "type": "static",
-                                "command": "DYNAMIK let srh = ($Shift ? $UpperCase : $LowerCase); let res = []; let tuple; srh.forEach((seI) => {let name = \"$PlaylistName\" + seI; tuple = {\"name\":\"\"}; tuple.name = name; tuple.char = seI; res.push(tuple)}); res;",
+                                "command": ".",
+                                "itemname": "DYNAMIK \"Num Lock \" + ($NumLock ? \"OFF\" : \"ON\")",
+                                "itemimage": "$ImageLocation/numkey.jpg",
+                                "evalwrite": [{"variable": "NumLock", "value": "DYNAMIK !$NumLock"}],
+                                "evalnext": [{"test": true, "then": "NewPlaylist"}]
+                            },
+                            {
+                                "type": "static",
+                                "command": "DYNAMIK let srh = ($NumLock ? $NumKeys : ($Shift ? $UpperCase : $LowerCase)); let res = []; let tuple; srh.forEach((seI) => {let name = \"$PlaylistName\" + seI; tuple = {\"name\":\"\"}; tuple.name = name; tuple.char = seI; res.push(tuple)}); res;",
                                 "queryresult": "$.*",
                                 "itemname": "DYNAMIK JSON.parse(\"$Result\").char",
-                                "itemimage": "$ImageLocation/dot.jpg",
+                                "itemimage": "$ImageLocation/key.jpg",
                                 "evalwrite": [
                                     {"variable": "PlaylistName", "value": "DYNAMIK JSON.parse(\"$Result\").name"},
                                     {"variable": "Shift", "value": false}
