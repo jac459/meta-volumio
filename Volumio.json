@@ -1140,15 +1140,7 @@
                             {"type": "static", "command": ".", "itemtype": "tile", "itemimage": "$MyAlbumArtURI"},
                             {"type": "static", "command": ".", "itemname": "Close", "itemlabel": "Close Directory", "itemimage": "$ImageLocation/closefolder.jpg", "itemaction": "ACTION_Dummy", "itemUI": "close"},
                             {"type": "static", "command": ".", "itemname": "Play", "itemlabel": "Play Selection", "itemimage": "$ImageLocation/play.jpg", "itemaction": "ACTION_Play", "itemUI": "close"},
-                            {
-                                "type": "static",
-                                "command": ".",
-                                "itemname": "Add",
-                                "itemlabel": "Add Selection to Queue",
-                                "itemimage": "$ImageLocation/queue.jpg",
-                                "itemaction": "ACTION_Queue",
-                                "itemUI": "goBack"
-                            },
+                            {"type": "static", "command": ".", "itemname": "Add", "itemlabel": "Add Selection to Queue", "itemimage": "$ImageLocation/queue.jpg", "itemaction": "ACTION_Queue", "itemUI": "goBack"},
                             {
                                 "type": "static",
                                 "command": ".",
@@ -1176,15 +1168,7 @@
                             {"type": "static", "command": ".", "itemtype": "tile", "itemimage": "$MyAlbumArtURI"},
                             {"type": "static", "command": ".", "itemname": "Close", "itemlabel": "Close Directory", "itemimage": "$ImageLocation/closefolder.jpg", "itemaction": "ACTION_Dummy", "itemUI": "close"},
                             {"type": "static", "command": ".", "itemname": "Play", "itemlabel": "Play Selection", "itemimage": "$ImageLocation/play.jpg", "itemaction": "ACTION_Play", "itemUI": "close"},
-                            {
-                                "type": "static",
-                                "command": ".",
-                                "itemname": "Add",
-                                "itemlabel": "Add Selection to Queue",
-                                "itemimage": "$ImageLocation/queue.jpg",
-                                "itemaction": "ACTION_Queue",
-                                "itemUI": "goBack"
-                            },
+                            {"type": "static", "command": ".", "itemname": "Add", "itemlabel": "Add Selection to Queue", "itemimage": "$ImageLocation/queue.jpg", "itemaction": "ACTION_Queue", "itemUI": "goBack"},
                             {
                                 "type": "static",
                                 "command": ".",
